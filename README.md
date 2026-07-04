@@ -1,18 +1,66 @@
-# Soumyadeep Biswas — Portfolio
+<div align="center">
 
-**Live site: [imsoumya.netlify.app](https://imsoumya.netlify.app)**
+# Soumya — Portfolio
 
-Personal portfolio site for Soumyadeep Biswas, ML Engineer. Built as a single-page
-React app with a separate "Beyond Code" section for hobbies (currently: trekking).
+**ML Engineer @ Qualcomm** — designing and shipping intelligent systems, one deploy at a time.
+
+[![Live Site](https://img.shields.io/badge/live-imsoumya.netlify.app-d6870f?style=for-the-badge&logo=netlify&logoColor=white)](https://imsoumya.netlify.app)
+
+[![React](https://img.shields.io/badge/React_18-241c10?style=flat-square&logo=react&logoColor=61DAFB)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite_6-241c10?style=flat-square&logo=vite&logoColor=FFD62E)](https://vitejs.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-241c10?style=flat-square&logo=tailwindcss&logoColor=38BDF8)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-241c10?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+[![Three.js](https://img.shields.io/badge/Three.js-241c10?style=flat-square&logo=threedotjs&logoColor=white)](https://threejs.org)
+[![GSAP](https://img.shields.io/badge/GSAP-241c10?style=flat-square&logo=greensock&logoColor=88CE02)](https://gsap.com)
+[![React Router](https://img.shields.io/badge/React_Router-241c10?style=flat-square&logo=reactrouter&logoColor=CA4245)](https://reactrouter.com)
+
+</div>
+
+<br/>
+
+<img src="docs/preview.png" alt="Portfolio hero section" width="100%" />
+<img src="docs/preview-treks.png" alt="Trek roadmap page" width="100%" />
+
+<br/>
+
+## Contents
+
+- [Features](#features)
+- [Stack](#stack)
+- [Getting started](#getting-started)
+- [Editing content](#editing-content)
+- [Project structure](#project-structure)
+- [Deployment](#deployment)
+
+## Features
+
+- **Content-driven** — every section (name, work history, skills, projects,
+  achievements, contact links, trek log) is data, not markup. Edit one JSON
+  file, the whole site updates.
+- **Two visual registers, one site** — a clean, professional main page for
+  recruiters, and a full scrapbook/notebook treatment (torn-paper section
+  tags, pinned photo, hand-drawn circles) on the `/treks` hobby page.
+- **A hand-drawn ink circle that isn't fake** — the emphasis marks around key
+  numbers are generated at runtime from the actual rendered text size, so
+  short and long values each get a naturally-proportioned, slightly-different
+  loop instead of one shape stretched to fit.
+- **3D animated hero** — a lightweight neural-network canvas built directly
+  on `three.js` / `@react-three/fiber`, no heavy asset pipeline.
+- **Smooth scrolling + scroll-triggered reveals** via Lenis + GSAP
+  ScrollTrigger, layered with Framer Motion for component-level animation.
+- **Client-side routing that actually works on refresh** — `/treks` is a
+  real route, with a Netlify `_redirects` rule so deep links don't 404.
 
 ## Stack
 
-- **React 18 + Vite** — app shell and build tooling
-- **React Router** — client-side routing (`/` and `/treks`)
-- **Tailwind CSS** — styling
-- **Framer Motion** + **GSAP** — scroll-triggered and page animations
-- **Three.js** via `@react-three/fiber` — the animated neural-net canvas in the hero
-- **Lenis** — smooth scrolling
+| | |
+|---|---|
+| **Framework** | React 18 + Vite 6 |
+| **Routing** | React Router |
+| **Styling** | Tailwind CSS |
+| **Animation** | Framer Motion, GSAP + ScrollTrigger, Lenis |
+| **3D** | Three.js via `@react-three/fiber` |
+| **Icons** | Lucide |
 
 ## Getting started
 
@@ -62,9 +110,18 @@ public/         Static files copied as-is (favicons, _redirects)
 
 ## Deployment
 
-Deployed on Netlify at [imsoumya.netlify.app](https://imsoumya.netlify.app):
+Deployed on Netlify at **[imsoumya.netlify.app](https://imsoumya.netlify.app)**:
 
 - **Build command**: `npm run build`
 - **Publish directory**: `dist`
 - `public/_redirects` handles the SPA fallback so deep links like `/treks`
   don't 404 on refresh or direct visit.
+
+<br/>
+
+<div align="center">
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-imsoumya18-241c10?style=flat-square&logo=linkedin&logoColor=0A66C2)](https://linkedin.com/in/imsoumya18)
+[![GitHub](https://img.shields.io/badge/GitHub-imsoumya18-241c10?style=flat-square&logo=github&logoColor=white)](https://github.com/imsoumya18)
+
+</div>
