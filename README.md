@@ -1,5 +1,7 @@
 # Soumyadeep Biswas — Portfolio
 
+**Live site: [imsoumya.netlify.app](https://imsoumya.netlify.app)**
+
 Personal portfolio site for Soumyadeep Biswas, ML Engineer. Built as a single-page
 React app with a separate "Beyond Code" section for hobbies (currently: trekking).
 
@@ -60,7 +62,7 @@ public/         Static files copied as-is (favicons, _redirects)
 
 ## Deployment
 
-Deployed on Netlify:
+Deployed on Netlify at [imsoumya.netlify.app](https://imsoumya.netlify.app):
 
 - **Build command**: `npm run build`
 - **Publish directory**: `dist`
