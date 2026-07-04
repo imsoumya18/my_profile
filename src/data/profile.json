@@ -375,14 +375,14 @@
         "difficulty": "Difficulty 3–5 · up to 3,690 m",
         "treks": [
           {
-            "name": "Tungnath",
+            "name": "Tungnath Chandrashila Peak",
             "status": "done",
             "difficulty": "Easy–Moderate",
             "difficultyScore": 3,
             "altitude": 3690,
             "season": null,
             "location": "Uttarakhand, India",
-            "description": "Starting point — short, well-marked, a gentle introduction to Himalayan trekking rhythm.",
+            "description": "First Himalayan trek, done with a crew of friends — more laughs than altitude gain, but the rhythm stuck.",
             "completedDate": "Dec 2025",
             "altitudeFt": 12100,
             "photo": "tungnath"

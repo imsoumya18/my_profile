@@ -82,13 +82,14 @@ function NeuralNet() {
   )
 }
 
-export default function HeroCanvas() {
+export default function HeroCanvas({ active = true }) {
   return (
     <Canvas
       style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
       camera={{ position: [0, 0, 13], fov: 42 }}
       gl={{ antialias: true, alpha: true }}
       dpr={[1, 1.5]}
+      frameloop={active ? 'always' : 'never'}
     >
       <NeuralNet />
     </Canvas>

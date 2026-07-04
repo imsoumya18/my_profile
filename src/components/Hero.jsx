@@ -1,6 +1,7 @@
-import { useRef, Suspense } from 'react'
+import { useRef, useState, useEffect, Suspense } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import HeroCanvas from './HeroCanvas'
+import Doodle from './Doodle'
 import profile from '../data/profile.json'
 import profilePortrait from '../assets/images/profile-portrait.jpg'
 
@@ -25,6 +26,20 @@ export default function Hero() {
   const contentY       = useTransform(scrollYProgress, [0, 0.55], [0, -70])
   const canvasOpacity  = useTransform(scrollYProgress, [0, 0.55], [0.6, 0])
 
+  // Stop the WebGL scene from rendering every frame once it's scrolled
+  // out of view — same look while visible, zero cost once it isn't.
+  const [canvasActive, setCanvasActive] = useState(true)
+  useEffect(() => {
+    const el = heroRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => setCanvasActive(entry.isIntersecting),
+      { threshold: 0 },
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   return (
     <section
       ref={heroRef}
@@ -32,9 +47,23 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col justify-center pt-28 pb-16 lg:pt-24 lg:pb-16"
       style={{ background: '#fdf9f0', overflow: 'hidden' }}
     >
+      <div className="absolute cyber-grid pointer-events-none" aria-hidden="true" />
+      <div className="hidden lg:block absolute pointer-events-none" style={{ left: '4%', bottom: '6%' }}>
+        <Doodle type="mountain" size={92} rotate={-4} opacity={0.36} />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ left: '44%', top: '8%' }}>
+        <Doodle type="compass" size={72} rotate={8} opacity={0.34} />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ left: '8%', top: '18%' }}>
+        <Doodle type="brackets" size={64} rotate={-10} opacity={0.32} />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ left: '38%', bottom: '10%' }}>
+        <Doodle type="footprints" size={66} rotate={6} opacity={0.33} />
+      </div>
+
       {/* Neural net canvas */}
       <motion.div style={{ opacity: canvasOpacity, zIndex: 1 }} className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <Suspense fallback={null}><HeroCanvas /></Suspense>
+        <Suspense fallback={null}><HeroCanvas active={canvasActive} /></Suspense>
       </motion.div>
 
       {/* Hero content */}
@@ -130,8 +159,8 @@ export default function Hero() {
         </div>
 
         {/* Hanging photo — pinned to the page like a scrap on the wall */}
-        <div className="w-full lg:w-auto flex justify-center lg:justify-end lg:flex-shrink-0">
-          <div className="relative" style={{ width: 'min(320px, 72vw)', transform: 'rotate(3deg)' }}>
+        <div className="w-full lg:w-auto flex justify-center lg:justify-end lg:flex-shrink-0 lg:translate-x-6 xl:translate-x-10">
+          <div className="relative" style={{ width: 'min(390px, 78vw)', transform: 'rotate(3deg)' }}>
             <div style={{
               position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%) rotate(2deg)',
               width: 88, height: 26, background: 'rgba(214,135,15,0.3)', border: '1px solid rgba(168,94,18,0.22)', zIndex: 2,
@@ -145,7 +174,7 @@ export default function Hero() {
                 filter: 'grayscale(100%) contrast(1.05)',
               }} />
               <div className="note text-center" style={{ marginTop: '10px', color: '#a85e12', fontSize: '15px' }}>
-                Hyderabad · still debugging
+                Still debugging — just not from a desk
               </div>
             </div>
           </div>

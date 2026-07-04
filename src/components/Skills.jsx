@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import profile from '../data/profile.json'
 import SectionTag from './SectionTag'
+import Doodle from './Doodle'
 
 const { skills } = profile
 
@@ -27,13 +28,23 @@ export default function Skills() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="skills" className="py-20" style={{ background: '#fdf9f0' }}>
-      <div className="mb-16 space-y-3">
+    <section id="skills" className="relative overflow-hidden py-20" style={{ background: '#fdf9f0' }}>
+      <div className="absolute cyber-grid pointer-events-none" aria-hidden="true" />
+      <div className="hidden lg:block absolute pointer-events-none" style={{ left: '3%', bottom: '10%' }}>
+        <Doodle type="footprints" size={74} rotate={5} opacity={0.34} />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ right: '4%', top: '22%' }}>
+        <Doodle type="mountain" size={80} rotate={-8} opacity={0.33} />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ right: '12%', bottom: '14%' }}>
+        <Doodle type="camera" size={66} rotate={9} opacity={0.32} />
+      </div>
+      <div className="mb-16 space-y-3 relative">
         <MarqueeRow items={row1} />
         <MarqueeRow items={row2} reverse />
       </div>
 
-      <div ref={ref} className="max-w-7xl mx-auto px-5 sm:px-8">
+      <div ref={ref} className="max-w-7xl mx-auto px-5 sm:px-8 relative">
         <div className="divider mb-8" />
         <div className="lg:hidden flex items-center justify-between mb-14">
           <span className="label">03 — Skills</span>

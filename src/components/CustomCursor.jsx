@@ -5,17 +5,28 @@ export default function CustomCursor() {
   const ringRef = useRef(null)
   const mouse   = useRef({ x: -100, y: -100 })
   const ring    = useRef({ x: -100, y: -100 })
-  const [hover, setHover] = useState(false)
+  const hoverRef = useRef(false)
+  const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {
+    setEnabled(window.matchMedia('(hover: hover) and (pointer: fine)').matches)
+  }, [])
+
+  useEffect(() => {
+    if (!enabled) return
     const move = (e) => { mouse.current = { x: e.clientX, y: e.clientY } }
-    window.addEventListener('mousemove', move)
+    window.addEventListener('mousemove', move, { passive: true })
 
-    const onEnter = () => setHover(true)
-    const onLeave = () => setHover(false)
+    const onEnter = () => { hoverRef.current = true }
+    const onLeave = () => { hoverRef.current = false }
 
+    // Track which elements already have listeners so re-scans on DOM
+    // mutation don't keep stacking duplicate bindings.
+    const bound = new WeakSet()
     const addHoverListeners = () => {
       document.querySelectorAll('a, button').forEach((el) => {
+        if (bound.has(el)) return
+        bound.add(el)
         el.addEventListener('mouseenter', onEnter)
         el.addEventListener('mouseleave', onLeave)
       })
@@ -33,7 +44,7 @@ export default function CustomCursor() {
       if (ringRef.current) {
         ring.current.x = lerp(ring.current.x, mouse.current.x, 0.1)
         ring.current.y = lerp(ring.current.y, mouse.current.y, 0.1)
-        const s = hover ? 2.4 : 1
+        const s = hoverRef.current ? 2.4 : 1
         ringRef.current.style.transform = `translate(${ring.current.x - 16}px, ${ring.current.y - 16}px) scale(${s})`
       }
       raf = requestAnimationFrame(loop)
@@ -45,7 +56,9 @@ export default function CustomCursor() {
       cancelAnimationFrame(raf)
       obs.disconnect()
     }
-  }, [hover])
+  }, [enabled])
+
+  if (!enabled) return null
 
   return (
     <>

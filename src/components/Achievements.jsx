@@ -3,6 +3,8 @@ import { motion, useInView } from 'framer-motion'
 import { Code2, BarChart2, GitMerge, Cpu, Trophy, Star, Github } from 'lucide-react'
 import profile from '../data/profile.json'
 import SectionTag from './SectionTag'
+import Doodle from './Doodle'
+import TornEdge from './TornEdge'
 
 const { achievements } = profile
 
@@ -30,7 +32,20 @@ export default function Achievements() {
 
   return (
     <section id="achievements" className="relative py-20 px-5 sm:px-8" style={{ background: '#fdf9f0' }}>
-      <div ref={ref} className="max-w-7xl mx-auto">
+      <TornEdge color="#fdf9f0" seed={11} />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="cyber-grid" />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ right: '4%', bottom: '8%' }}>
+        <Doodle type="camera" size={78} rotate={7} opacity={0.35} />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ left: '4%', top: '12%' }}>
+        <Doodle type="book" size={70} rotate={-9} opacity={0.33} />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ left: '10%', bottom: '14%' }}>
+        <Doodle type="compass" size={64} rotate={11} opacity={0.31} />
+      </div>
+      <div ref={ref} className="max-w-7xl mx-auto relative">
         <div className="divider mb-8" />
         <div className="lg:hidden flex items-center justify-between mb-14">
           <span className="label">05 — Milestones</span>

@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Github, Linkedin, Mail, Phone, ArrowUpRight } from 'lucide-react'
 import profile from '../data/profile.json'
+import TornEdge from './TornEdge'
 
 const { contact, personal } = profile
 
@@ -13,7 +14,10 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative py-20 px-5 sm:px-8" style={{ background: '#f6efdd' }}>
-      <div className="absolute inset-0 cyber-grid pointer-events-none" />
+      <TornEdge color="#f6efdd" seed={19} />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="cyber-grid" />
+      </div>
 
       <div ref={ref} className="max-w-5xl mx-auto text-center relative">
         <div className="divider mb-8 max-w-6xl mx-auto" />

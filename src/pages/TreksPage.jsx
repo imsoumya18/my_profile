@@ -83,7 +83,34 @@ function NodeDot({ isDone, isPlanned }) {
   return <div className="w-4 h-4 rounded-full border-2" style={{ borderColor: '#ddd0ae', background: '#fdf9f0' }} />
 }
 
-function TrekCard({ trek, isDone, isPlanned, tilt, photo }) {
+// A hanging Polaroid — same treatment as the hero photos elsewhere on the
+// site, sized down to sit beside a trek card.
+function TrekPhoto({ photo, name, rotate, width = 220 }) {
+  if (!photo) return null
+  const s = width / 190
+  return (
+    <div className="relative" style={{ width, transform: `rotate(${rotate}deg)` }}>
+      <div style={{
+        position: 'absolute', top: -10 * s, left: '50%', transform: 'translateX(-50%) rotate(-2deg)',
+        width: 58 * s, height: 18 * s, background: 'rgba(214,135,15,0.3)', border: '1px solid rgba(168,94,18,0.22)', zIndex: 2,
+      }} />
+      <div style={{ background: '#fffdf7', padding: `${9 * s}px ${9 * s}px ${26 * s}px`, boxShadow: '0 14px 28px rgba(36,28,16,0.18), 0 2px 4px rgba(36,28,16,0.1)' }}>
+        <div style={{
+          aspectRatio: '4 / 5',
+          backgroundImage: `url(${photo})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'grayscale(100%) contrast(0.92) brightness(1.18)',
+        }} />
+        <div className="note text-center" style={{ marginTop: 6 * s, color: '#a85e12', fontSize: Math.max(11, 12 * s) }}>
+          {name}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function TrekCard({ trek, isDone, isPlanned, tilt }) {
   return (
     <div
       className="rounded-2xl p-6 transition-all duration-300 relative"
@@ -94,21 +121,6 @@ function TrekCard({ trek, isDone, isPlanned, tilt, photo }) {
         transform: `rotate(${tilt}deg)`,
       }}
     >
-      {photo && (
-        <div className="-mx-6 -mt-6 mb-4 rounded-t-2xl overflow-hidden relative" style={{ aspectRatio: '16 / 10' }}>
-          <img
-            src={photo}
-            alt={`${trek.name} trek`}
-            className="w-full h-full object-cover"
-            style={{ filter: 'grayscale(100%) contrast(1.05)' }}
-          />
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: `linear-gradient(to bottom, transparent 55%, ${isDone ? '#241c10' : '#f6efdd'} 100%)` }}
-          />
-        </div>
-      )}
-
       {/* Washi tape */}
       <div style={{
         position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%) rotate(-2deg)',
@@ -189,15 +201,20 @@ function TrekNode({ trek, isLeft }) {
           <div className="w-px flex-1 mt-1" style={{ background: '#e6dabd' }} />
         </div>
         <div className="flex-1 min-w-0 pb-3">
-          <TrekCard trek={trek} isDone={isDone} isPlanned={isPlanned} tilt={isLeft ? -0.8 : 0.6} photo={photo} />
+          {photo && (
+            <div className="flex justify-center mb-4">
+              <TrekPhoto photo={photo} name={trek.name} rotate={isLeft ? -2 : 2} />
+            </div>
+          )}
+          <TrekCard trek={trek} isDone={isDone} isPlanned={isPlanned} tilt={isLeft ? -0.8 : 0.6} />
         </div>
       </div>
 
       {/* Desktop: alternating zigzag */}
-      <div className={`hidden md:flex items-start gap-0 w-full ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
+      <div className={`hidden md:flex items-center gap-0 w-full ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
         {/* Card */}
         <div className="w-[calc(50%-28px)]">
-          <TrekCard trek={trek} isDone={isDone} isPlanned={isPlanned} tilt={isLeft ? -1 : 0.8} photo={photo} />
+          <TrekCard trek={trek} isDone={isDone} isPlanned={isPlanned} tilt={isLeft ? -1 : 0.8} />
         </div>
 
         {/* Centre spine: connector line + node dot */}
@@ -209,8 +226,10 @@ function TrekNode({ trek, isLeft }) {
           </div>
         </div>
 
-        {/* Empty spacer on the other side */}
-        <div className="w-[calc(50%-28px)]" />
+        {/* Other side of the spine — the photo hangs here, kept close to the line */}
+        <div className="w-[calc(50%-28px)] flex pt-2" style={{ justifyContent: isLeft ? 'flex-start' : 'flex-end' }}>
+          {photo && <TrekPhoto photo={photo} name={trek.name} rotate={isLeft ? 3 : -3} />}
+        </div>
       </div>
     </motion.div>
   )
@@ -366,7 +385,7 @@ export default function TreksPage() {
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2"
             style={{ background: 'linear-gradient(to bottom, transparent, #e6dabd 5%, #e6dabd 95%, transparent)' }} />
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 md:gap-12">
             {sequence.map((item) => {
               if (item.type === 'tier') {
                 return (

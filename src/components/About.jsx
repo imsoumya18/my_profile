@@ -5,6 +5,7 @@ import { motion, useInView } from 'framer-motion'
 import { Briefcase, GraduationCap, MapPin, GitBranch } from 'lucide-react'
 import profile from '../data/profile.json'
 import SectionTag from './SectionTag'
+import Doodle from './Doodle'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -57,8 +58,18 @@ export default function About() {
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="about" ref={ref} className="relative py-20 px-5 sm:px-8" style={{ background: '#fdf9f0' }}>
-      <div className="max-w-7xl mx-auto">
+    <section id="about" ref={ref} className="relative overflow-hidden py-20 px-5 sm:px-8" style={{ background: '#fdf9f0' }}>
+      <div className="absolute cyber-grid pointer-events-none" aria-hidden="true" />
+      <div className="hidden lg:block absolute pointer-events-none" style={{ right: '5%', top: '10%' }}>
+        <Doodle type="coffee" size={84} rotate={-6} opacity={0.36} />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ left: '4%', bottom: '8%' }}>
+        <Doodle type="book" size={78} rotate={7} opacity={0.34} />
+      </div>
+      <div className="hidden lg:block absolute pointer-events-none" style={{ right: '10%', bottom: '16%' }}>
+        <Doodle type="brackets" size={60} rotate={12} opacity={0.31} />
+      </div>
+      <div className="max-w-7xl mx-auto relative">
         <div className="divider mb-12" />
         <div className="lg:hidden flex items-center justify-between mb-12">
           <span className="label">01 — About</span>

@@ -4,6 +4,7 @@ import { Mic2, Scissors, ArrowUpRight, Play } from 'lucide-react'
 import profile from '../data/profile.json'
 import InkCircle from './InkCircle'
 import SectionTag from './SectionTag'
+import TornEdge from './TornEdge'
 
 const { projects } = profile
 
@@ -132,7 +133,10 @@ export default function Projects() {
 
   return (
     <section id="projects" className="relative py-20 px-5 sm:px-8" style={{ background: '#f6efdd' }}>
-      <div className="absolute inset-0 cyber-grid pointer-events-none" />
+      <TornEdge color="#f6efdd" seed={4} />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="cyber-grid" />
+      </div>
       <div ref={ref} className="max-w-7xl mx-auto relative">
         <div className="divider mb-8" />
         <div className="flex items-center justify-between lg:justify-end mb-14">

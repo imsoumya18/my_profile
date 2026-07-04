@@ -129,12 +129,19 @@ body {
   background-clip: text;
 }
 
-/* ─── Subtle dot grid ─── */
+/* ─── Notebook grid — oversized + tilted so it reads like a page laid down
+   slightly askew, not a perfect engineered grid ─── */
 .cyber-grid {
+  position: absolute;
+  top: -8%;
+  left: -6%;
+  right: -6%;
+  bottom: -8%;
+  transform: rotate(-1.4deg);
   background-image:
-    linear-gradient(rgba(36,28,16,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(36,28,16,0.05) 1px, transparent 1px);
-  background-size: 80px 80px;
+    linear-gradient(rgba(36,28,16,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36,28,16,0.035) 1px, transparent 1px);
+  background-size: 34px 34px;
 }
 
 /* ─── Divider ─── */
