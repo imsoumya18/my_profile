@@ -37,9 +37,10 @@
 - **Content-driven** — every section (name, work history, skills, projects,
   achievements, contact links, trek log) is data, not markup. Edit one JSON
   file, the whole site updates.
-- **Two visual registers, one site** — a clean, professional main page for
-  recruiters, and a full scrapbook/notebook treatment (torn-paper section
-  tags, pinned photo, hand-drawn circles) on the `/treks` hobby page.
+- **A notebook, not a template** — a tilted dot-grid background, hand-drawn
+  doodles, and torn-paper seams between sections run through the whole site,
+  not just the `/treks` hobby page (which goes further still: pinned trek
+  photos hanging off the timeline, washi tape, hand-drawn circles).
 - **A hand-drawn ink circle that isn't fake** — the emphasis marks around key
   numbers are generated at runtime from the actual rendered text size, so
   short and long values each get a naturally-proportioned, slightly-different
@@ -95,7 +96,10 @@ src/data/profile.json
 
 Edit that file and the site updates; no need to touch component code for
 content changes. Images live in `src/assets/images/` and are referenced from
-there.
+there. Trek photos are the one exception worth knowing: drop a file into
+`src/assets/images/treks/` and set `"photo": "filename"` (no extension) on
+that trek's entry in `profile.json` — it's picked up automatically via
+`import.meta.glob`, no component code to touch.
 
 ## Project structure
 
