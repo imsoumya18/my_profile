@@ -7,6 +7,14 @@ import InkCircle from '../components/InkCircle'
 
 const { treks } = profile
 
+// Trek photos live in src/assets/images/treks/ and are referenced from
+// profile.json by filename (no extension) — drop a new file in that folder
+// and set `"photo": "filename"` on the trek entry to use it.
+const trekPhotoModules = import.meta.glob('../assets/images/treks/*.{jpg,jpeg,png}', { eager: true, import: 'default' })
+const trekPhotos = Object.fromEntries(
+  Object.entries(trekPhotoModules).map(([path, url]) => [path.match(/([^/]+)\.\w+$/)[1], url])
+)
+
 // Flatten tiers into a sequenced list with tier metadata attached
 const allTreks = treks.tiers.flatMap((tier) =>
   tier.treks.map((t) => ({ ...t, tier }))
@@ -75,7 +83,7 @@ function NodeDot({ isDone, isPlanned }) {
   return <div className="w-4 h-4 rounded-full border-2" style={{ borderColor: '#ddd0ae', background: '#fdf9f0' }} />
 }
 
-function TrekCard({ trek, isDone, isPlanned, tilt }) {
+function TrekCard({ trek, isDone, isPlanned, tilt, photo }) {
   return (
     <div
       className="rounded-2xl p-6 transition-all duration-300 relative"
@@ -86,6 +94,21 @@ function TrekCard({ trek, isDone, isPlanned, tilt }) {
         transform: `rotate(${tilt}deg)`,
       }}
     >
+      {photo && (
+        <div className="-mx-6 -mt-6 mb-4 rounded-t-2xl overflow-hidden relative" style={{ aspectRatio: '16 / 10' }}>
+          <img
+            src={photo}
+            alt={`${trek.name} trek`}
+            className="w-full h-full object-cover"
+            style={{ filter: 'grayscale(100%) contrast(1.05)' }}
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: `linear-gradient(to bottom, transparent 55%, ${isDone ? '#241c10' : '#f6efdd'} 100%)` }}
+          />
+        </div>
+      )}
+
       {/* Washi tape */}
       <div style={{
         position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%) rotate(-2deg)',
@@ -149,6 +172,7 @@ function TrekNode({ trek, isLeft }) {
 
   const isDone    = trek.status === 'done'
   const isPlanned = trek.status === 'planned'
+  const photo     = trek.photo ? trekPhotos[trek.photo] : null
 
   return (
     <motion.div
@@ -165,7 +189,7 @@ function TrekNode({ trek, isLeft }) {
           <div className="w-px flex-1 mt-1" style={{ background: '#e6dabd' }} />
         </div>
         <div className="flex-1 min-w-0 pb-3">
-          <TrekCard trek={trek} isDone={isDone} isPlanned={isPlanned} tilt={isLeft ? -0.8 : 0.6} />
+          <TrekCard trek={trek} isDone={isDone} isPlanned={isPlanned} tilt={isLeft ? -0.8 : 0.6} photo={photo} />
         </div>
       </div>
 
@@ -173,7 +197,7 @@ function TrekNode({ trek, isLeft }) {
       <div className={`hidden md:flex items-start gap-0 w-full ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
         {/* Card */}
         <div className="w-[calc(50%-28px)]">
-          <TrekCard trek={trek} isDone={isDone} isPlanned={isPlanned} tilt={isLeft ? -1 : 0.8} />
+          <TrekCard trek={trek} isDone={isDone} isPlanned={isPlanned} tilt={isLeft ? -1 : 0.8} photo={photo} />
         </div>
 
         {/* Centre spine: connector line + node dot */}
