@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Mountain, Calendar } from 'lucide-react'
+import { Mountain } from 'lucide-react'
 import profile from '../data/profile.json'
 import trekHero from '../assets/images/trek-hero.jpg'
 import InkCircle from '../components/InkCircle'
@@ -164,14 +164,6 @@ function TrekCard({ trek, isDone, isPlanned, tilt }) {
           <span className="font-mono text-xs" style={{ color: '#241c10' }}>
             {trek.altitude.toLocaleString()} m / {trek.altitudeFt.toLocaleString()} ft
           </span>
-        )}
-        {trek.season && (
-          <div className="flex items-center gap-1.5">
-            <Calendar size={11} style={{ color: isDone ? 'rgba(253,249,240,0.45)' : '#c2b28c' }} strokeWidth={1.5} />
-            <span className="font-mono text-xs" style={{ color: isDone ? 'rgba(253,249,240,0.6)' : '#8a7a5e' }}>
-              {trek.season}
-            </span>
-          </div>
         )}
       </div>
     </div>
