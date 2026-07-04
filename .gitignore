@@ -1,0 +1,30 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Claude local settings and skills (account-level, not project-specific)
+.claude/settings.local.json
+.claude/skills/
+
+# Python cache (from bundled Claude skills)
+__pycache__/
+*.pyc

@@ -1,0 +1,653 @@
+{
+  "personal": {
+    "name": "Soumyadeep Biswas",
+    "nickname": "Soumya",
+    "initials": "SB",
+    "email": "soumyadeep184@gmail.com",
+    "phone": "+91 84208 22053",
+    "location": "Hyderabad, India",
+    "currentRole": "Machine Learning Engineer",
+    "currentCompany": "Qualcomm",
+    "tagline": "Machine Learning Engineer & GenAI developer. Designing and shipping intelligent systems — from model research and fine-tuning to real-world deployment.",
+    "links": {
+      "github": "https://github.com/imsoumya18",
+      "linkedin": "https://linkedin.com/in/imsoumya18",
+      "resume": "https://drive.google.com/drive/folders/13TK5rRevTDf68PE0dT3lXg0O_8U1gcjA"
+    }
+  },
+  "nav": [
+    {
+      "href": "#about",
+      "label": "About"
+    },
+    {
+      "href": "#experience",
+      "label": "Work"
+    },
+    {
+      "href": "#skills",
+      "label": "Skills"
+    },
+    {
+      "href": "#projects",
+      "label": "Projects"
+    },
+    {
+      "href": "#contact",
+      "label": "Contact"
+    }
+  ],
+  "heroStats": [
+    {
+      "n": "400+",
+      "l": "LeetCode"
+    },
+    {
+      "n": "4",
+      "l": "OSS Merged PRs"
+    },
+    {
+      "n": "3+",
+      "l": "Years in AI/ML"
+    },
+    {
+      "n": "8+",
+      "l": "AI Systems Built"
+    }
+  ],
+  "about": {
+    "statement": "I research, build, and ship intelligent systems — from training and fine-tuning models to deploying production AI applications that solve real problems at scale.",
+    "facts": [
+      {
+        "icon": "Briefcase",
+        "label": "Currently",
+        "value": "ML Engineer @ Qualcomm",
+        "sub": "Hyderabad, India"
+      },
+      {
+        "icon": "GraduationCap",
+        "label": "Education",
+        "value": "IIEST Shibpur",
+        "sub": "B.Tech CST · CGPA 7.91"
+      },
+      {
+        "icon": "MapPin",
+        "label": "Speciality",
+        "value": "GenAI · LLMs · Deep Learning",
+        "sub": "Model Training · Fine-tuning"
+      },
+      {
+        "icon": "GitBranch",
+        "label": "Open Source",
+        "value": "Ivy (14.2k★) · DuckDuckGo (1.5k★)",
+        "sub": "4 merged pull requests"
+      }
+    ]
+  },
+  "experience": [
+    {
+      "index": "01",
+      "company": "Qualcomm",
+      "role": "Machine Learning Engineer",
+      "period": "June 2025 — Present",
+      "location": "Hyderabad",
+      "summary": "Built the Model Onboarding Infrastructure (MOI) — a platform that reduced ML model integration time from 2 weeks to under 1 hour, enabling faster experimentation and deployment cycles.",
+      "bullets": [
+        "End-to-end ML model integration platform supporting diverse model types at Qualcomm scale",
+        "Resolved critical OOM failures in large model workflows through storage and loading optimisations",
+        "Model evaluation infrastructure supporting 250+ concurrent experiment runs with full reproducibility"
+      ],
+      "tags": [
+        "PyTorch",
+        "FastAPI",
+        "ONNX",
+        "Docker",
+        "Kubernetes",
+        "Hugging Face"
+      ]
+    },
+    {
+      "index": "02",
+      "company": "MOURI Tech",
+      "role": "Technical Consultant — GenAI",
+      "period": "June 2024 — May 2025",
+      "location": "Bengaluru",
+      "summary": "Led GenAI consulting engagements across recruitment automation, clinical data extraction, and enterprise NL-to-SQL systems.",
+      "bullets": [
+        "Resume scoring platform on Azure OpenAI — 40% throughput improvement",
+        "OCR extraction pipeline — 80% reduction in clinical processing time",
+        "Text-to-SQL chatbot for enterprise data retrieval via natural language"
+      ],
+      "tags": [
+        "Azure OpenAI",
+        "LangChain",
+        "FastAPI",
+        "Cognitive Search"
+      ]
+    },
+    {
+      "index": "03",
+      "company": "EBIW",
+      "role": "Generative AI Developer",
+      "period": "March 2024 — June 2024",
+      "location": "Kolkata",
+      "summary": "Built a production RAG system for legal document analysis and deployed serverless AI microservices on Azure.",
+      "bullets": [
+        "RAG pipeline for legal entity extraction and contract parsing",
+        "Serverless inference via Azure Functions — 20% latency reduction"
+      ],
+      "tags": [
+        "RAG",
+        "OpenAI",
+        "Azure Functions",
+        "LangChain"
+      ]
+    },
+    {
+      "index": "04",
+      "company": "Unify AI",
+      "role": "Machine Learning Engineer",
+      "period": "Aug 2023 — March 2024",
+      "location": "Remote",
+      "summary": "Contributed core cross-framework tensor operations to Ivy — enabling seamless interoperability across PyTorch, TensorFlow, NumPy and more.",
+      "bullets": [
+        "Implemented add_n, index_add, index_add_ for the Ivy framework (14.2k★)",
+        "Cross-framework support: PyTorch, TensorFlow, NumPy, SciPy, scikit-learn"
+      ],
+      "tags": [
+        "PyTorch",
+        "TensorFlow",
+        "NumPy",
+        "Open Source",
+        "Ivy"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Indian Institute of Engineering Science and Technology (IIEST), Shibpur",
+      "shortName": "IIEST Shibpur",
+      "degree": "Bachelor of Technology in Computer Science & Technology",
+      "period": "2019 — 2023",
+      "cgpa": "7.91"
+    }
+  ],
+  "skills": {
+    "categories": [
+      {
+        "id": "01",
+        "label": "Languages",
+        "skills": [
+          "Python",
+          "C++",
+          "C",
+          "TypeScript",
+          "SQL"
+        ]
+      },
+      {
+        "id": "02",
+        "label": "ML & AI",
+        "skills": [
+          "PyTorch",
+          "TensorFlow",
+          "Generative AI",
+          "LLMs",
+          "RAG",
+          "LangChain",
+          "ONNX",
+          "Quantization",
+          "Whisper",
+          "Hugging Face"
+        ]
+      },
+      {
+        "id": "03",
+        "label": "Backend & Cloud",
+        "skills": [
+          "FastAPI",
+          "REST APIs",
+          "Node.js",
+          "React.js",
+          "MongoDB",
+          "Azure",
+          "AWS",
+          "GCP"
+        ]
+      },
+      {
+        "id": "04",
+        "label": "MLOps & Tools",
+        "skills": [
+          "Docker",
+          "Kubernetes",
+          "MLflow",
+          "Weights & Biases",
+          "CI/CD",
+          "Git LFS",
+          "Linux"
+        ]
+      }
+    ],
+    "marquee": {
+      "row1": [
+        "Python",
+        "PyTorch",
+        "TensorFlow",
+        "LangChain",
+        "Hugging Face",
+        "Generative AI",
+        "LLMs",
+        "RAG",
+        "ONNX",
+        "Quantization",
+        "Whisper",
+        "FastAPI"
+      ],
+      "row2": [
+        "Fine-tuning",
+        "LoRA",
+        "MLflow",
+        "Weights & Biases",
+        "Azure OpenAI",
+        "TypeScript",
+        "C++",
+        "Docker",
+        "Kubernetes",
+        "MongoDB",
+        "AWS",
+        "GCP"
+      ]
+    },
+    "exploring": [
+      "Agentic AI",
+      "CUDA Optimization",
+      "Multi-modal LLMs",
+      "LoRA Fine-tuning"
+    ]
+  },
+  "projects": [
+    {
+      "title": "Audio Deepfake Detector",
+      "date": "June 2026",
+      "icon": "Mic2",
+      "description": "A production-ready audio deepfake detection system that outperforms published baselines on the ASVspoof 2019 benchmark, with real-time inference and Grad-CAM visualizations.",
+      "details": [
+        "LCNN + RawNet2 ensemble achieving 7.07% EER vs 8.09% published baseline",
+        "Grad-CAM heatmaps for model interpretability & spectrogram visualization",
+        "FastAPI backend + Gradio frontend deployed on Hugging Face Spaces"
+      ],
+      "tags": [
+        "PyTorch",
+        "FastAPI",
+        "Gradio",
+        "Hugging Face",
+        "LCNN",
+        "RawNet2"
+      ],
+      "metric": {
+        "value": "7.07%",
+        "label": "EER vs 8.09% baseline"
+      },
+      "githubUrl": "https://github.com/imsoumya18",
+      "liveUrl": "https://huggingface.co/spaces/imsoumya18/audio_deepfake_detector"
+    },
+    {
+      "title": "YouTube Semantic Chunker",
+      "date": "June 2024",
+      "icon": "Scissors",
+      "description": "A semantic audio segmentation tool combining OpenAI Whisper with voice activity detection to extract precise audio-text pairs, enabling fine-grained retrieval and dataset creation.",
+      "details": [
+        "OpenAI Whisper + VAD for precise sub-15s audio-text segment extraction",
+        "Semantic boundary detection preserving speaker-turn context",
+        "End-to-end Gradio app deployed on Hugging Face Spaces"
+      ],
+      "tags": [
+        "OpenAI Whisper",
+        "Hugging Face",
+        "Gradio",
+        "VAD",
+        "Audio AI"
+      ],
+      "metric": {
+        "value": "<15s",
+        "label": "Precise audio-text pairs"
+      },
+      "githubUrl": "https://github.com/imsoumya18",
+      "liveUrl": "https://huggingface.co/spaces/imsoumya18/yt-chunking"
+    }
+  ],
+  "achievements": {
+    "stats": [
+      {
+        "value": 400,
+        "suffix": "+",
+        "label": "LeetCode Problems",
+        "icon": "Code2"
+      },
+      {
+        "value": 180,
+        "suffix": "+",
+        "label": "GeeksForGeeks Problems",
+        "icon": "BarChart2"
+      },
+      {
+        "value": 4,
+        "suffix": "",
+        "label": "OSS Merged PRs",
+        "icon": "GitMerge"
+      },
+      {
+        "value": 3,
+        "suffix": "+",
+        "label": "Years in AI/ML",
+        "icon": "Cpu"
+      }
+    ],
+    "awards": [
+      {
+        "year": "2018",
+        "icon": "Trophy",
+        "title": "JBNSTS Scholar",
+        "description": "Selected in the top 200 scholars of JBNSTS across West Bengal — one of India's most prestigious science talent scholarships."
+      },
+      {
+        "year": "2017",
+        "icon": "Star",
+        "title": "NTSE Stage-I · State Rank 223",
+        "description": "Achieved State Rank 223 in NTSE Stage-I in West Bengal, competing among thousands of students statewide."
+      },
+      {
+        "year": "2023–24",
+        "icon": "Github",
+        "title": "Open Source Contributor",
+        "description": "4 merged PRs to Ivy (14.2k★) and DuckDuckGo Privacy Extension (1.5k★), implementing cross-framework tensor ops and UI fixes."
+      }
+    ]
+  },
+  "treks": {
+    "tagline": "Started with a short hike near home. Haven't stopped checking weather forecasts since.",
+    "subtitle": "18 Treks · 6 Tiers",
+    "tiers": [
+      {
+        "number": 0,
+        "label": "Already Underway",
+        "difficulty": "Difficulty 3–5 · up to 3,690 m",
+        "treks": [
+          {
+            "name": "Tungnath",
+            "status": "done",
+            "difficulty": "Easy–Moderate",
+            "difficultyScore": 3,
+            "altitude": 3690,
+            "season": null,
+            "location": "Uttarakhand, India",
+            "description": "Starting point — short, well-marked, a gentle introduction to Himalayan trekking rhythm.",
+            "completedDate": "Dec 2025",
+            "altitudeFt": 12100
+          },
+          {
+            "name": "Valley of Flowers",
+            "status": "planned",
+            "plannedDate": "Aug 2026",
+            "difficulty": "Moderate",
+            "difficultyScore": 5,
+            "altitude": 3658,
+            "season": "Aug",
+            "location": "Uttarakhand, India",
+            "description": "A step up in scenery and duration — non-technical but a solid stamina and logistics test.",
+            "altitudeFt": 12000
+          }
+        ]
+      },
+      {
+        "number": 1,
+        "label": "Trailhead",
+        "difficulty": "Easy–Moderate · Difficulty 2–4 · up to 3,810 m",
+        "treks": [
+          {
+            "name": "Kedarkantha",
+            "status": "future",
+            "difficulty": "Moderate",
+            "difficultyScore": 4,
+            "altitude": 3810,
+            "season": "Dec–Apr",
+            "location": "Uttarakhand, India",
+            "description": "Great next step after Tungnath — well-marked snow trek, cold-weather camping.",
+            "altitudeFt": 12500
+          },
+          {
+            "name": "Triund",
+            "status": "future",
+            "difficulty": "Easy",
+            "difficultyScore": 2,
+            "altitude": 3010,
+            "season": "Year-round",
+            "location": "Himachal Pradesh, India",
+            "description": "Short, popular overnight near Dharamshala — a good low-stakes warm-up.",
+            "altitudeFt": 9900
+          },
+          {
+            "name": "Brahmatal",
+            "status": "future",
+            "difficulty": "Moderate",
+            "difficultyScore": 4,
+            "altitude": 3734,
+            "season": "Dec–Mar",
+            "location": "Uttarakhand, India",
+            "description": "Frozen lake, snow camping, Trishul / Nanda Ghunti views — a Kedarkantha alternate.",
+            "altitudeFt": 12300
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "label": "Warm-Up",
+        "difficulty": "Moderate · Difficulty 4–5 · up to 4,270 m",
+        "treks": [
+          {
+            "name": "Har Ki Dun",
+            "status": "future",
+            "difficulty": "Moderate",
+            "difficultyScore": 4,
+            "altitude": 3566,
+            "season": "Mar–Dec",
+            "location": "Uttarakhand, India",
+            "description": "River-valley walking and views of Swargarohini — longer than Valley of Flowers.",
+            "altitudeFt": 11700
+          },
+          {
+            "name": "Hampta Pass",
+            "status": "future",
+            "difficulty": "Moderate",
+            "difficultyScore": 5,
+            "altitude": 4270,
+            "season": "Jun–Sep",
+            "location": "Himachal Pradesh, India",
+            "description": "Crossover from lush Kullu valley to arid Lahaul in one pass — scenic.",
+            "altitudeFt": 14000
+          },
+          {
+            "name": "Annapurna Base Camp",
+            "status": "future",
+            "difficulty": "Moderate",
+            "difficultyScore": 4,
+            "altitude": 4130,
+            "season": "Mar–Nov",
+            "location": "Nepal",
+            "description": "First taste of Nepal tea-house logistics — gentler than the big three.",
+            "altitudeFt": 13500
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "label": "Building Altitude",
+        "difficulty": "Moderate–Difficult · Difficulty 6 · up to 5,416 m",
+        "treks": [
+          {
+            "name": "Roopkund",
+            "status": "future",
+            "difficulty": "Moderate–Difficult",
+            "difficultyScore": 6,
+            "altitude": 5029,
+            "season": "May–Jun, Sep",
+            "location": "Uttarakhand, India",
+            "description": "Pushes past 4,800 m — a genuine altitude test.",
+            "altitudeFt": 16500
+          },
+          {
+            "name": "Kashmir Great Lakes",
+            "status": "future",
+            "difficulty": "Moderate–Difficult",
+            "difficultyScore": 6,
+            "altitude": 4191,
+            "season": "Jul–Aug",
+            "location": "Jammu & Kashmir, India",
+            "description": "Multiple high passes; alpine-lake scenery few treks match.",
+            "altitudeFt": 13800
+          },
+          {
+            "name": "Chadar Trek",
+            "status": "future",
+            "difficulty": "Moderate–Difficult",
+            "difficultyScore": 6,
+            "altitude": 3390,
+            "season": "Jan–Feb",
+            "location": "Ladakh, India",
+            "description": "Walking a frozen river — a cold-weather resilience detour.",
+            "altitudeFt": 11100
+          },
+          {
+            "name": "Annapurna Circuit",
+            "status": "future",
+            "difficulty": "Moderate–Difficult",
+            "difficultyScore": 6,
+            "altitude": 5416,
+            "season": "Oct–Nov, Mar–Apr",
+            "location": "Nepal",
+            "description": "Crosses Thorong La at 5,400 m — key acclimatization rehearsal.",
+            "altitudeFt": 17800
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "label": "High Passes",
+        "difficulty": "Difficult · Difficulty 7–8 · up to 5,319 m",
+        "treks": [
+          {
+            "name": "Goecha La",
+            "status": "future",
+            "difficulty": "Difficult",
+            "difficultyScore": 7,
+            "altitude": 4940,
+            "season": "Apr–May, Sep–Oct",
+            "location": "Sikkim, India",
+            "description": "Close-up Kanchenjunga view without the full base camp commitment.",
+            "altitudeFt": 16200
+          },
+          {
+            "name": "Rupin Pass",
+            "status": "future",
+            "difficulty": "Difficult",
+            "difficultyScore": 7,
+            "altitude": 4650,
+            "season": "May–Jun, Dec",
+            "location": "Uttarakhand, India",
+            "description": "Dramatic, varied terrain with steep snow sections.",
+            "altitudeFt": 15300
+          },
+          {
+            "name": "Pin Parvati Pass",
+            "status": "future",
+            "difficulty": "Difficult",
+            "difficultyScore": 8,
+            "altitude": 5319,
+            "season": "Jul–Sep",
+            "location": "Himachal Pradesh, India",
+            "description": "Remote, expedition-style — the last rehearsal before base camps.",
+            "altitudeFt": 17500
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "label": "Base Camps",
+        "difficulty": "Difficult · Difficulty 7–8 · up to 5,364 m",
+        "treks": [
+          {
+            "name": "Everest Base Camp",
+            "status": "future",
+            "difficulty": "Difficult",
+            "difficultyScore": 7,
+            "altitude": 5364,
+            "season": "Mar–May, Sep–Nov",
+            "location": "Nepal",
+            "description": "The classic — tackle once ABC and a 5,000 m+ pass are done.",
+            "altitudeFt": 17600
+          },
+          {
+            "name": "Kanchenjunga BC",
+            "status": "future",
+            "difficulty": "Difficult",
+            "difficultyScore": 8,
+            "altitude": 5143,
+            "season": "Apr–May, Oct–Nov",
+            "location": "Sikkim/Nepal",
+            "description": "Remote and far less crowded than EBC — ideally after Goecha La.",
+            "altitudeFt": 16900
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "label": "Expedition",
+        "difficulty": "Difficulty 9",
+        "treks": [
+          {
+            "name": "K2 Base Camp",
+            "status": "future",
+            "difficulty": "Expedition",
+            "difficultyScore": 9,
+            "altitude": 5050,
+            "season": "Jun–Aug",
+            "location": "Concordia, Pakistan",
+            "description": "Longest and most remote — tougher logistics via Skardu. The ultimate objective.",
+            "altitudeFt": 16600
+          }
+        ]
+      }
+    ]
+  },
+  "contact": [
+    {
+      "label": "GitHub",
+      "handle": "@imsoumya18",
+      "href": "https://github.com/imsoumya18",
+      "icon": "Github",
+      "external": true
+    },
+    {
+      "label": "LinkedIn",
+      "handle": "imsoumya18",
+      "href": "https://linkedin.com/in/imsoumya18",
+      "icon": "Linkedin",
+      "external": true
+    },
+    {
+      "label": "Email",
+      "handle": "soumyadeep184@gmail.com",
+      "href": "mailto:soumyadeep184@gmail.com",
+      "icon": "Mail",
+      "external": false
+    },
+    {
+      "label": "Phone",
+      "handle": "+91 84208 22053",
+      "href": "tel:+918420822053",
+      "icon": "Phone",
+      "external": false
+    }
+  ]
+}
