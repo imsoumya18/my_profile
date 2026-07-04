@@ -71,7 +71,7 @@ function TiltCard({ project, index }) {
           </div>
           <div className="text-left sm:text-right px-3 py-2 rounded-lg flex-shrink-0 self-start"
             style={{ background: '#fdf9f0', border: '1px solid #e6dabd' }}>
-            <InkCircle variant={index} padX={10} padY={4}>
+            <InkCircle variant={index}>
               <span className="font-syne font-bold text-sm" style={{ color: '#a85e12' }}>{project.metric.value}</span>
             </InkCircle>
             <div className="font-grotesk text-xs" style={{ color: '#8a7a5e' }}>{project.metric.label}</div>

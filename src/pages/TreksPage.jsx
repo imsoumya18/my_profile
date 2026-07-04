@@ -120,7 +120,7 @@ function TrekCard({ trek, isDone, isPlanned, tilt }) {
       {/* Stats row */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
         {isDone ? (
-          <InkCircle padX={10} padY={6}>
+          <InkCircle>
             <span className="font-mono text-xs" style={{ color: 'rgba(253,249,240,0.9)' }}>
               {trek.altitude.toLocaleString()} m / {trek.altitudeFt.toLocaleString()} ft
             </span>

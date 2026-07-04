@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useId, useLayoutEffect, useRef, useState } from 'react'
 
 // Seeded PRNG so a given variant always draws the same "hand", but different
 // variants (and different content sizes) never look identical.
@@ -14,10 +14,10 @@ function makeRng(seed) {
 function ellipsePoints(cx, cy, rx, ry, rng, n, jitter, startDeg) {
   const pts = []
   for (let i = 0; i < n; i++) {
-    const deg = startDeg + i * (360 / n)
+    const deg = startDeg + i * (360 / n) + (rng() * 2 - 1) * 8
     const rad = (deg * Math.PI) / 180
     const jr = (rng() * 2 - 1) * jitter
-    pts.push([cx + rx * (1 + jr) * Math.cos(rad), cy + ry * (1 + jr * 0.7) * Math.sin(rad)])
+    pts.push([cx + rx * (1 + jr) * Math.cos(rad), cy + ry * (1 + jr * 0.8) * Math.sin(rad)])
   }
   return pts
 }
@@ -38,23 +38,23 @@ function smoothClosedPath(pts) {
   return d.trim()
 }
 
-// Builds a mark sized to the actual content box: a hand-circled ellipse traced
-// twice (like circling something quickly for emphasis), ending in a small flick
-// where the pen lifts off — dimensions and wobble both derive from W/H and seed,
-// so no two marks (or content lengths) come out looking identical.
+// Builds a mark sized to the actual content box: a loose, lopsided ellipse
+// traced twice like someone circling something in a hurry, ending in a flick
+// where the "crayon" lifts off. Dimensions and wobble both derive from W/H
+// and seed, so no two marks (or content lengths) come out looking identical.
 function buildMark(W, H, seed, stroke) {
   const rng = makeRng(seed * 9973 + 17)
   const cx = W / 2
   const cy = H / 2
-  const rx = W / 2 - stroke * 1.3
-  const ry = H / 2 - stroke * 1.3
+  const rx = W / 2 - stroke * 1.5
+  const ry = H / 2 - stroke * 1.5
 
-  const pts1 = ellipsePoints(cx, cy, rx, ry, rng, 11, 0.045, -95)
+  const pts1 = ellipsePoints(cx, cy, rx, ry, rng, 8, 0.16, -95)
   const path1 = smoothClosedPath(pts1)
 
-  const nudgeX = -0.05 * rx
-  const nudgeY = -0.1 * ry
-  const pts2 = ellipsePoints(cx + nudgeX, cy + nudgeY, rx * 0.97, ry * 0.97, rng, 11, 0.05, -100)
+  const nudgeX = -0.09 * rx
+  const nudgeY = -0.16 * ry
+  const pts2 = ellipsePoints(cx + nudgeX, cy + nudgeY, rx * 0.92, ry * 0.9, rng, 8, 0.18, -105)
   const path2 = smoothClosedPath(pts2)
 
   const [sx, sy] = pts2[0]
@@ -64,21 +64,24 @@ function buildMark(W, H, seed, stroke) {
   const norm = Math.hypot(dx, dy) || 1
   dx /= norm
   dy /= norm
-  const flickLen = Math.min(rx, ry) * 0.6
-  const fx = sx + dx * flickLen * 0.6 - dy * flickLen * 0.9
-  const fy = sy + dy * flickLen * 0.6 - dx * flickLen * 0.2
+  const flickLen = Math.min(rx, ry) * 0.7
+  const fx = sx + dx * flickLen * 0.6 - dy * flickLen * 0.95
+  const fy = sy + dy * flickLen * 0.6 - dx * flickLen * 0.25
   const flick = `M ${sx.toFixed(1)},${sy.toFixed(1)} L ${fx.toFixed(1)},${fy.toFixed(1)}`
 
   return [path1, path2, flick]
 }
 
-// Wraps its children with a hand-drawn "circled for emphasis" mark. The mark's
-// size and wobble are computed from the rendered content box, so a short value
-// and a long one each get a naturally-proportioned loop rather than one shape
-// stretched to fit.
-export default function InkCircle({ children, color = '#d6870f', variant = 0, padX = 14, padY = 8, strokeWidth = 2.6 }) {
+// Wraps its children with a crayon-red "circled for emphasis" mark, roughed up
+// with a turbulence filter so the line reads as waxy and hand-scrawled rather
+// than clean vector art. Size and wobble are computed from the rendered
+// content box, so a short value and a long one each get a naturally
+// proportioned, independently-imperfect loop rather than one shape stretched
+// to fit.
+export default function InkCircle({ children, color = '#d6342a', variant = 0, padX = 26, padY = 20, strokeWidth = 3.4 }) {
   const contentRef = useRef(null)
   const [box, setBox] = useState(null)
+  const filterId = useId()
 
   useLayoutEffect(() => {
     const el = contentRef.current
@@ -107,9 +110,17 @@ export default function InkCircle({ children, color = '#d6870f', variant = 0, pa
           aria-hidden="true"
           style={{ overflow: 'visible' }}
         >
-          <path d={path1} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" />
-          <path d={path2} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" />
-          <path d={flick} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" />
+          <defs>
+            <filter id={filterId} x="-40%" y="-40%" width="180%" height="180%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.05 0.4" numOctaves="2" seed={variant + 1} result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+          </defs>
+          <g filter={`url(#${filterId})`}>
+            <path d={path1} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" opacity={0.92} />
+            <path d={path2} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" opacity={0.7} />
+            <path d={flick} fill="none" stroke={color} strokeWidth={strokeWidth + 0.4} strokeLinecap="round" opacity={0.92} />
+          </g>
         </svg>
       )}
     </span>
