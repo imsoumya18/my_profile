@@ -1,26 +1,117 @@
-// Hand-drawn circle marks — imperfect, slightly different each time, ending in a
-// small overshoot tail where the "pen" crosses back over itself, like a real annotation.
-const PATHS = [
-  'M 13.3,21.1 C 15.8,16.3 20.6,12.9 27.9,10.5 C 35.3,8.1 48.1,6.2 57.3,6.7 C 66.5,7.2 77.9,9.6 83.1,13.5 C 88.3,17.3 88.6,24.7 88.8,30.0 C 88.9,35.3 89.4,41.7 84.2,45.2 C 79.0,48.6 66.8,49.6 57.7,50.7 C 48.5,51.8 36.7,53.9 29.2,51.9 C 21.7,50.0 15.2,44.3 12.6,39.1 C 9.9,34.0 10.7,25.9 13.3,21.1 C 4,25.5 9,28 15,25.5',
-  'M 11.9,22.5 C 15.0,17.9 20.8,14.0 28.4,11.4 C 36.0,8.9 48.8,6.6 57.3,7.2 C 65.9,7.7 74.3,10.7 79.5,14.5 C 84.6,18.4 88.3,25.1 88.3,30.0 C 88.3,34.9 84.7,39.6 79.5,43.8 C 74.4,48.1 65.4,54.7 57.2,55.6 C 49.0,56.5 38.4,52.1 30.5,49.3 C 22.6,46.6 12.7,43.6 9.6,39.1 C 6.5,34.7 8.7,27.1 11.9,22.5 C 3,23 8,26.5 16,24',
-  'M 12.3,21.4 C 14.7,16.4 20.8,9.6 28.3,7.4 C 35.7,5.2 48.2,6.6 56.9,8.0 C 65.5,9.3 73.8,12.0 80.0,15.6 C 86.2,19.3 93.5,25.2 93.9,30.0 C 94.3,34.8 88.5,40.5 82.4,44.3 C 76.2,48.2 66.1,52.1 57.0,53.2 C 47.9,54.4 34.8,53.9 27.6,51.3 C 20.5,48.8 16.7,42.7 14.2,37.7 C 11.6,32.8 10.0,26.5 12.3,21.4 C 5,26 11,29 17,26',
-]
+import { useLayoutEffect, useRef, useState } from 'react'
 
-// Wraps its children with an imperfect hand-drawn circle, evenly padded so the
-// mark centers on the content regardless of text length.
-export default function InkCircle({ children, color = '#d6870f', variant = 0, padX = 16, padY = 10, strokeWidth = 4 }) {
+// Seeded PRNG so a given variant always draws the same "hand", but different
+// variants (and different content sizes) never look identical.
+function makeRng(seed) {
+  let s = seed % 2147483647
+  if (s <= 0) s += 2147483646
+  return () => {
+    s = (s * 16807) % 2147483647
+    return (s - 1) / 2147483646
+  }
+}
+
+function ellipsePoints(cx, cy, rx, ry, rng, n, jitter, startDeg) {
+  const pts = []
+  for (let i = 0; i < n; i++) {
+    const deg = startDeg + i * (360 / n)
+    const rad = (deg * Math.PI) / 180
+    const jr = (rng() * 2 - 1) * jitter
+    pts.push([cx + rx * (1 + jr) * Math.cos(rad), cy + ry * (1 + jr * 0.7) * Math.sin(rad)])
+  }
+  return pts
+}
+
+// Catmull-Rom -> cubic bezier, closed loop.
+function smoothClosedPath(pts) {
+  const n = pts.length
+  let d = `M ${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)} `
+  for (let i = 0; i < n; i++) {
+    const p0 = pts[(i - 1 + n) % n]
+    const p1 = pts[i % n]
+    const p2 = pts[(i + 1) % n]
+    const p3 = pts[(i + 2) % n]
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6]
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6]
+    d += `C ${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)} `
+  }
+  return d.trim()
+}
+
+// Builds a mark sized to the actual content box: a hand-circled ellipse traced
+// twice (like circling something quickly for emphasis), ending in a small flick
+// where the pen lifts off — dimensions and wobble both derive from W/H and seed,
+// so no two marks (or content lengths) come out looking identical.
+function buildMark(W, H, seed, stroke) {
+  const rng = makeRng(seed * 9973 + 17)
+  const cx = W / 2
+  const cy = H / 2
+  const rx = W / 2 - stroke * 1.3
+  const ry = H / 2 - stroke * 1.3
+
+  const pts1 = ellipsePoints(cx, cy, rx, ry, rng, 11, 0.045, -95)
+  const path1 = smoothClosedPath(pts1)
+
+  const nudgeX = -0.05 * rx
+  const nudgeY = -0.1 * ry
+  const pts2 = ellipsePoints(cx + nudgeX, cy + nudgeY, rx * 0.97, ry * 0.97, rng, 11, 0.05, -100)
+  const path2 = smoothClosedPath(pts2)
+
+  const [sx, sy] = pts2[0]
+  const [nx, ny] = pts2[1]
+  let dx = sx - nx
+  let dy = sy - ny
+  const norm = Math.hypot(dx, dy) || 1
+  dx /= norm
+  dy /= norm
+  const flickLen = Math.min(rx, ry) * 0.6
+  const fx = sx + dx * flickLen * 0.6 - dy * flickLen * 0.9
+  const fy = sy + dy * flickLen * 0.6 - dx * flickLen * 0.2
+  const flick = `M ${sx.toFixed(1)},${sy.toFixed(1)} L ${fx.toFixed(1)},${fy.toFixed(1)}`
+
+  return [path1, path2, flick]
+}
+
+// Wraps its children with a hand-drawn "circled for emphasis" mark. The mark's
+// size and wobble are computed from the rendered content box, so a short value
+// and a long one each get a naturally-proportioned loop rather than one shape
+// stretched to fit.
+export default function InkCircle({ children, color = '#d6870f', variant = 0, padX = 14, padY = 8, strokeWidth = 2.6 }) {
+  const contentRef = useRef(null)
+  const [box, setBox] = useState(null)
+
+  useLayoutEffect(() => {
+    const el = contentRef.current
+    if (!el) return
+    const measure = () => {
+      const w = el.offsetWidth + padX * 2
+      const h = el.offsetHeight + padY * 2
+      setBox((prev) => (prev && prev.w === w && prev.h === h ? prev : { w, h }))
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [padX, padY])
+
+  const [path1, path2, flick] = box ? buildMark(box.w, box.h, variant + 1, strokeWidth) : [null, null, null]
+
   return (
     <span className="relative inline-flex" style={{ padding: `${padY}px ${padX}px` }}>
-      <span className="relative z-10">{children}</span>
-      <svg
-        className="absolute inset-0"
-        viewBox="0 0 100 60"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        style={{ overflow: 'visible' }}
-      >
-        <path d={PATHS[variant % PATHS.length]} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" />
-      </svg>
+      <span ref={contentRef} className="relative z-10">{children}</span>
+      {box && (
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox={`0 0 ${box.w} ${box.h}`}
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          style={{ overflow: 'visible' }}
+        >
+          <path d={path1} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" />
+          <path d={path2} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" />
+          <path d={flick} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" />
+        </svg>
+      )}
     </span>
   )
 }

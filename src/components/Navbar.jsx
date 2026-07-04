@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { Linkedin, FileText, ChevronDown, Mountain, BookMarked, Menu, X, Home } from 'lucide-react'
+import { Linkedin, FileText, ChevronDown, Mountain, Camera, BookOpen, Menu, X, Home } from 'lucide-react'
 import profile from '../data/profile.json'
 
 const { nav, personal } = profile
@@ -142,8 +142,16 @@ export default function Navbar() {
                     className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs cursor-default"
                     style={{ color: '#c2b28c' }}
                   >
-                    <BookMarked size={13} strokeWidth={1.5} />
-                    Readlist
+                    <Camera size={13} strokeWidth={1.5} />
+                    Photography
+                    <span className="font-mono ml-auto" style={{ fontSize: '9px', color: '#c2b28c' }}>SOON</span>
+                  </div>
+                  <div
+                    className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs cursor-default"
+                    style={{ color: '#c2b28c' }}
+                  >
+                    <BookOpen size={13} strokeWidth={1.5} />
+                    Reading
                     <span className="font-mono ml-auto" style={{ fontSize: '9px', color: '#c2b28c' }}>SOON</span>
                   </div>
                 </motion.div>
@@ -230,9 +238,14 @@ export default function Navbar() {
                 <Mountain size={15} strokeWidth={1.5} />
                 Trekking
               </Link>
+              <div className="flex items-center gap-3 py-3 font-grotesk text-sm" style={{ color: '#c2b28c', borderBottom: '1px solid #ede3c8' }}>
+                <Camera size={15} strokeWidth={1.5} />
+                Photography
+                <span className="font-mono ml-auto" style={{ fontSize: '9px', color: '#c2b28c' }}>SOON</span>
+              </div>
               <div className="flex items-center gap-3 py-3 font-grotesk text-sm" style={{ color: '#c2b28c' }}>
-                <BookMarked size={15} strokeWidth={1.5} />
-                Readlist
+                <BookOpen size={15} strokeWidth={1.5} />
+                Reading
                 <span className="font-mono ml-auto" style={{ fontSize: '9px', color: '#c2b28c' }}>SOON</span>
               </div>
             </div>
