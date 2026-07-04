@@ -1,4 +1,4 @@
-import { useId, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 // Seeded PRNG so a given variant always draws the same "hand", but different
 // variants (and different content sizes) never look identical.
@@ -72,16 +72,13 @@ function buildMark(W, H, seed, stroke) {
   return [path1, path2, flick]
 }
 
-// Wraps its children with a crayon-red "circled for emphasis" mark, roughed up
-// with a turbulence filter so the line reads as waxy and hand-scrawled rather
-// than clean vector art. Size and wobble are computed from the rendered
-// content box, so a short value and a long one each get a naturally
-// proportioned, independently-imperfect loop rather than one shape stretched
-// to fit.
+// Wraps its children with a crayon-red "circled for emphasis" mark. Size and
+// wobble are computed from the rendered content box, so a short value and a
+// long one each get a naturally proportioned, independently-imperfect loop
+// rather than one shape stretched to fit.
 export default function InkCircle({ children, color = '#d6342a', variant = 0, padX = 26, padY = 20, strokeWidth = 3.4 }) {
   const contentRef = useRef(null)
   const [box, setBox] = useState(null)
-  const filterId = useId()
 
   useLayoutEffect(() => {
     const el = contentRef.current
@@ -110,17 +107,9 @@ export default function InkCircle({ children, color = '#d6342a', variant = 0, pa
           aria-hidden="true"
           style={{ overflow: 'visible' }}
         >
-          <defs>
-            <filter id={filterId} x="-40%" y="-40%" width="180%" height="180%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.05 0.4" numOctaves="2" seed={variant + 1} result="noise" />
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
-            </filter>
-          </defs>
-          <g filter={`url(#${filterId})`}>
-            <path d={path1} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" opacity={0.92} />
-            <path d={path2} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" opacity={0.7} />
-            <path d={flick} fill="none" stroke={color} strokeWidth={strokeWidth + 0.4} strokeLinecap="round" opacity={0.92} />
-          </g>
+          <path d={path1} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" opacity={0.92} />
+          <path d={path2} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" opacity={0.7} />
+          <path d={flick} fill="none" stroke={color} strokeWidth={strokeWidth + 0.4} strokeLinecap="round" opacity={0.92} />
         </svg>
       )}
     </span>
