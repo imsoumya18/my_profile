@@ -12,16 +12,25 @@ function makeRng(seed) {
   }
 }
 
-// A single wobbly loop built from four bezier arcs, each quarter-turn nudged
-// in angle and radius — the same construction as the classic hand-drawn-
-// circle trick (github.com/spencerthayer/nhjwu), seeded and built directly
-// in the content box's own pixel space (cx/cy/rx/ry) rather than a
-// normalized unit circle, so its real rendered arc length is sane and
-// `getTotalLength()` gives a usable value for the dash-draw animation.
-function circlePath(cx, cy, rx, ry, rng, drMin = -0.15, drMax = 0.05, startMin = 150, startMax = 190, dThetaMin = 0.05, dThetaMax = 0.3) {
-  const c = 0.551915024494
-  const beta = Math.atan(c)
-  const d = Math.sqrt(c * c + 1)
+// A single wobbly loop built from bezier arcs, each step nudged in angle and
+// radius — the same construction as the classic hand-drawn-circle trick
+// (github.com/spencerthayer/nhjwu), seeded and built directly in the content
+// box's own pixel space (cx/cy/rx/ry) rather than a normalized unit circle,
+// so its real rendered arc length is sane and `getTotalLength()` gives a
+// usable value for the dash-draw animation.
+//
+// The reference uses exactly 4 quarter-turn segments, which is enough for a
+// roughly square marker but falls apart on our wide, flat stat text (often
+// 4:1+ width:height): four widely-spaced sample points squashed that hard
+// stop looking like an ellipse and start looking like a kinked chord. Using
+// more, smaller segments (with a matching kappa for each one's own sweep)
+// keeps the same hand-drawn wobble but actually traces the ellipse at any
+// aspect ratio.
+function circlePath(cx, cy, rx, ry, rng, segments = 8, drMin = -0.08, drMax = 0.03, startMin = 150, startMax = 190, dThetaMin = 0.05, dThetaMax = 0.3) {
+  const baseStep = (2 * Math.PI) / segments
+  const kappa = (4 / 3) * Math.tan(baseStep / 4)
+  const beta = Math.atan(kappa)
+  const d = Math.sqrt(kappa * kappa + 1)
   const at = (r, theta) => [cx + rx * r * Math.sin(theta), cy + ry * r * Math.cos(theta)]
 
   let r = 0.9
@@ -32,8 +41,8 @@ function circlePath(cx, cy, rx, ry, rng, drMin = -0.15, drMax = 0.05, startMin =
   const [c0x, c0y] = at(d * r, theta + beta)
   path += `C${c0x.toFixed(2)},${c0y.toFixed(2)} `
 
-  for (let i = 0; i < 4; i++) {
-    theta += (Math.PI / 2) * (1 + dThetaMin + rng() * (dThetaMax - dThetaMin))
+  for (let i = 0; i < segments; i++) {
+    theta += baseStep * (1 + dThetaMin + rng() * (dThetaMax - dThetaMin))
     r *= 1 + drMin + rng() * (drMax - drMin)
     const [c2x, c2y] = at(d * r, theta - beta)
     const [ex, ey] = at(r, theta)
