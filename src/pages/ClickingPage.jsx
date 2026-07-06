@@ -21,12 +21,26 @@ const SCATTER = [
   { rotate: -1.6, tx: 4,  ty: 8,  tape: -4, mt: 28, mb: 72 },
 ]
 
+// Instagram embeds resize themselves asynchronously (postMessage from the
+// iframe, well after our own layout pass), and CSS multi-column's
+// browser-calculated height balancing doesn't reliably re-run when that
+// happens — the tallest column ends up overlapping whatever comes after it.
+// Explicit flex columns sidestep that: each is normal block flow, so its
+// height is just the sum of its children's, and it reflows correctly no
+// matter when the iframes finish resizing.
+const COLUMN_COUNT = 3
+function distributeColumns(posts) {
+  const columns = Array.from({ length: COLUMN_COUNT }, () => [])
+  posts.forEach((post, i) => columns[i % COLUMN_COUNT].push({ post, index: i }))
+  return columns
+}
+
 // Same hanging-photo treatment as TreksPage, but the "photo" is an
 // Instagram embed instead of a background image.
 function ClickCard({ url, scatter }) {
   const { rotate, tx, ty, tape, mt, mb } = scatter
   return (
-    <div className="break-inside-avoid" style={{ transform: `rotate(${rotate}deg) translate(${tx}px, ${ty}px)`, marginTop: mt, marginBottom: mb }}>
+    <div style={{ transform: `rotate(${rotate}deg) translate(${tx}px, ${ty}px)`, marginTop: mt, marginBottom: mb }}>
       <div className="relative">
         <div style={{
           position: 'absolute', top: -10, left: '50%', transform: `translateX(-50%) rotate(${tape}deg)`,
@@ -115,16 +129,20 @@ export default function ClickingPage() {
           <Doodle type="camera" size={72} rotate={8} opacity={0.32} />
         </div>
         <div className="hidden lg:block absolute pointer-events-none" style={{ left: '4%', top: '40%' }}>
-          <Doodle type="coffee" size={64} rotate={-10} opacity={0.3} />
+          <Doodle type="aperture" size={66} rotate={-10} opacity={0.3} />
         </div>
         <div className="hidden lg:block absolute pointer-events-none" style={{ right: '7%', bottom: '8%' }}>
-          <Doodle type="compass" size={70} rotate={12} opacity={0.3} />
+          <Doodle type="camera" size={58} rotate={12} opacity={0.3} />
         </div>
 
         <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-10 pb-32 relative">
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-8">
-            {clicks.posts.map((p, i) => (
-              <ClickCard key={p.url} url={p.url} scatter={SCATTER[i % SCATTER.length]} />
+          <div className="flex flex-wrap justify-center gap-8">
+            {distributeColumns(clicks.posts).map((col, ci) => (
+              <div key={ci} className="flex flex-col" style={{ flex: '1 1 320px', maxWidth: 400 }}>
+                {col.map(({ post, index }) => (
+                  <ClickCard key={post.url} url={post.url} scatter={SCATTER[index % SCATTER.length]} />
+                ))}
+              </div>
             ))}
           </div>
 

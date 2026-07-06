@@ -63,10 +63,10 @@ export default function Experience() {
         <Doodle type="brackets" size={74} rotate={-6} opacity={0.34} />
       </div>
       <div className="hidden lg:block absolute pointer-events-none" style={{ left: '3%', top: '38%' }}>
-        <Doodle type="compass" size={76} rotate={14} opacity={0.33} />
+        <Doodle type="chip" size={76} rotate={-5} opacity={0.33} />
       </div>
       <div className="hidden lg:block absolute pointer-events-none" style={{ right: '8%', bottom: '10%' }}>
-        <Doodle type="footprints" size={64} rotate={-8} opacity={0.32} />
+        <Doodle type="neuralnet" size={70} rotate={6} opacity={0.32} />
       </div>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20 relative">
         <div className="divider mb-8" />

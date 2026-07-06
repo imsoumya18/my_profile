@@ -4,6 +4,7 @@ import { Mountain } from 'lucide-react'
 import profile from '../data/profile.json'
 import trekHero from '../assets/images/trek-hero.jpg'
 import InkCircle from '../components/InkCircle'
+import Doodle from '../components/Doodle'
 
 const { treks } = profile
 
@@ -369,7 +370,18 @@ export default function TreksPage() {
         </motion.div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-16 pb-24">
+      <section className="relative overflow-hidden">
+        <div className="hidden lg:block absolute pointer-events-none" style={{ left: '4%', top: '10%' }}>
+          <Doodle type="mountain" size={84} rotate={-5} opacity={0.34} />
+        </div>
+        <div className="hidden lg:block absolute pointer-events-none" style={{ right: '5%', top: '32%' }}>
+          <Doodle type="compass" size={72} rotate={10} opacity={0.32} />
+        </div>
+        <div className="hidden lg:block absolute pointer-events-none" style={{ left: '6%', bottom: '12%' }}>
+          <Doodle type="footprints" size={64} rotate={-7} opacity={0.32} />
+        </div>
+
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-16 pb-24 relative">
 
         {/* Timeline */}
         <div className="relative">
@@ -408,7 +420,8 @@ export default function TreksPage() {
             — take the switchbacks slow, the ridgeline is worth it.
           </span>
         </div>
-      </div>
+        </div>
+      </section>
     </div>
   )
 }

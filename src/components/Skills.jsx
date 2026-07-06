@@ -31,13 +31,13 @@ export default function Skills() {
     <section id="skills" className="relative overflow-hidden py-20" style={{ background: '#fdf9f0' }}>
       <div className="absolute cyber-grid pointer-events-none" aria-hidden="true" />
       <div className="hidden lg:block absolute pointer-events-none" style={{ left: '3%', bottom: '10%' }}>
-        <Doodle type="footprints" size={74} rotate={5} opacity={0.34} />
+        <Doodle type="terminal" size={74} rotate={4} opacity={0.34} />
       </div>
       <div className="hidden lg:block absolute pointer-events-none" style={{ right: '4%', top: '22%' }}>
-        <Doodle type="mountain" size={80} rotate={-8} opacity={0.33} />
+        <Doodle type="chip" size={72} rotate={-7} opacity={0.33} />
       </div>
       <div className="hidden lg:block absolute pointer-events-none" style={{ right: '12%', bottom: '14%' }}>
-        <Doodle type="camera" size={66} rotate={9} opacity={0.32} />
+        <Doodle type="neuralnet" size={68} rotate={8} opacity={0.32} />
       </div>
       <div className="mb-16 space-y-3 relative">
         <MarqueeRow items={row1} />

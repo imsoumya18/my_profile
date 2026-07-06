@@ -37,13 +37,13 @@ export default function Achievements() {
         <div className="cyber-grid" />
       </div>
       <div className="hidden lg:block absolute pointer-events-none" style={{ right: '4%', bottom: '8%' }}>
-        <Doodle type="camera" size={78} rotate={7} opacity={0.35} />
+        <Doodle type="trophy" size={76} rotate={7} opacity={0.35} />
       </div>
       <div className="hidden lg:block absolute pointer-events-none" style={{ left: '4%', top: '12%' }}>
-        <Doodle type="book" size={70} rotate={-9} opacity={0.33} />
+        <Doodle type="chip" size={70} rotate={-9} opacity={0.33} />
       </div>
       <div className="hidden lg:block absolute pointer-events-none" style={{ left: '10%', bottom: '14%' }}>
-        <Doodle type="compass" size={64} rotate={11} opacity={0.31} />
+        <Doodle type="book" size={62} rotate={11} opacity={0.31} />
       </div>
       <div ref={ref} className="max-w-7xl mx-auto relative">
         <div className="divider mb-8" />

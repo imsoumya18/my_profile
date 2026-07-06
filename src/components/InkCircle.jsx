@@ -3,7 +3,7 @@ import { useInView } from 'framer-motion'
 
 // Seeded PRNG so a given variant always draws the same "hand", but different
 // variants (and different content sizes) never look identical.
-function makeRng(seed) {
+export function makeRng(seed) {
   let s = seed % 2147483647
   if (s <= 0) s += 2147483646
   return () => {
@@ -26,7 +26,7 @@ function makeRng(seed) {
 // more, smaller segments (with a matching kappa for each one's own sweep)
 // keeps the same hand-drawn wobble but actually traces the ellipse at any
 // aspect ratio.
-function circlePath(cx, cy, rx, ry, rng, segments = 8, drMin = -0.08, drMax = 0.03, startMin = 150, startMax = 190, dThetaMin = 0.05, dThetaMax = 0.3) {
+export function circlePath(cx, cy, rx, ry, rng, segments = 8, drMin = -0.08, drMax = 0.03, startMin = 150, startMax = 190, dThetaMin = 0.05, dThetaMax = 0.3) {
   const baseStep = (2 * Math.PI) / segments
   const kappa = (4 / 3) * Math.tan(baseStep / 4)
   const beta = Math.atan(kappa)
