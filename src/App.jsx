@@ -13,6 +13,7 @@ import Projects from './components/Projects'
 import Achievements from './components/Achievements'
 import Contact from './components/Contact'
 import TreksPage from './pages/TreksPage'
+import ClickingPage from './pages/ClickingPage'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -61,6 +62,7 @@ export default function App() {
       <Routes>
         <Route path="/"       element={<Portfolio />} />
         <Route path="/treks"  element={<TreksPage />} />
+        <Route path="/clicking" element={<ClickingPage />} />
       </Routes>
     </BrowserRouter>
   )

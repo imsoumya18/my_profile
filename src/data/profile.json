@@ -621,6 +621,18 @@
       }
     ]
   },
+  "clicks": {
+    "tagline": "The camera comes along on treks, walks, and the occasional overthought city evening. Full roll's on Instagram — a handful of frames are pinned here.",
+    "instagram": "https://www.instagram.com/b_soumya4",
+    "instagramHandle": "@b_soumya4",
+    "posts": [
+      { "url": "https://www.instagram.com/p/DZkdJk0FOc4" },
+      { "url": "https://www.instagram.com/p/DZQOuk-vkuy" },
+      { "url": "https://www.instagram.com/p/DTAxJeNDxoQ" },
+      { "url": "https://www.instagram.com/p/DOqz82xD9A7" },
+      { "url": "https://www.instagram.com/p/DTVIqY_D42-" }
+    ]
+  },
   "contact": [
     {
       "label": "GitHub",
