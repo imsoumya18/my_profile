@@ -656,11 +656,25 @@
       "external": false
     },
     {
-      "label": "Phone",
-      "handle": "+91 84208 22053",
-      "href": "tel:+918420822053",
-      "icon": "Phone",
-      "external": false
+      "label": "LeetCode",
+      "handle": "imsoumya18",
+      "href": "https://leetcode.com/u/imsoumya18/",
+      "icon": "LeetCodeIcon",
+      "external": true
+    },
+    {
+      "label": "Instagram",
+      "handle": "@b_soumya4",
+      "href": "https://www.instagram.com/b_soumya4",
+      "icon": "Instagram",
+      "external": true
+    },
+    {
+      "label": "Facebook",
+      "handle": "imsoumya18",
+      "href": "https://www.facebook.com/imsoumya18",
+      "icon": "Facebook",
+      "external": true
     }
   ]
 }

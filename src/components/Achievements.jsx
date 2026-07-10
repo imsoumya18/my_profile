@@ -5,6 +5,7 @@ import profile from '../data/profile.json'
 import SectionTag from './SectionTag'
 import Doodle from './Doodle'
 import TornEdge from './TornEdge'
+import useTilt from '../hooks/useTilt'
 
 const { achievements } = profile
 
@@ -24,6 +25,51 @@ function Counter({ target, suffix = '', inView }) {
     requestAnimationFrame(step)
   }, [inView, target])
   return <>{count}{suffix}</>
+}
+
+function AwardCard({ award, i, inView }) {
+  const { ref, tilt, glow, onMouseMove, onMouseLeave } = useTilt()
+  const Icon = ICON_MAP[award.icon]
+  const rot = [-1.5, 1, -1][i % 3]
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: 0.3 + i * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="relative p-8 overflow-hidden transition-all duration-200 group"
+      style={{
+        background: '#f6efdd',
+        border: '1px solid #e6dabd',
+        boxShadow: '3px 5px 0 rgba(36,28,16,0.08)',
+        transform: `rotate(${rot}deg) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transformStyle: 'preserve-3d',
+      }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ background: `radial-gradient(circle at ${glow.x}% ${glow.y}%, rgba(36,28,16,0.04) 0%, transparent 65%)` }}
+      />
+      <div style={{
+        position: 'absolute', top: -2, left: '50%', transform: 'translateX(-50%) rotate(-2deg)',
+        width: 76, height: 22, background: 'rgba(214,135,15,0.26)', border: '1px solid rgba(168,94,18,0.2)',
+      }} />
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 mt-3"
+        style={{ background: '#fdf9f0', border: '1px solid #e6dabd' }}>
+        <Icon size={18} style={{ color: '#6b5d46' }} strokeWidth={1.5} />
+      </div>
+      <div className="font-mono text-xs mb-2" style={{ color: '#8a7a5e' }}>{award.year}</div>
+      <h3 className="font-note text-xl mb-3" style={{ color: '#241c10' }}>
+        {award.title}
+      </h3>
+      <p className="font-grotesk text-xs leading-relaxed" style={{ color: '#6b5d46' }}>
+        {award.description}
+      </p>
+    </motion.div>
+  )
 }
 
 export default function Achievements() {
@@ -92,38 +138,9 @@ export default function Achievements() {
 
         {/* Awards */}
         <div className="grid md:grid-cols-3 gap-8 mt-6">
-          {achievements.awards.map((award, i) => {
-            const Icon = ICON_MAP[award.icon]
-            const rot = [-1.5, 1, -1][i % 3]
-            return (
-              <motion.div
-                key={award.title}
-                initial={{ opacity: 0, y: 40 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="relative p-8 overflow-hidden transition-all duration-300 hover-lift"
-                style={{ background: '#f6efdd', border: '1px solid #e6dabd', boxShadow: '3px 5px 0 rgba(36,28,16,0.08)', transform: `rotate(${rot}deg)` }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d6870f' }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e6dabd' }}
-              >
-                <div style={{
-                  position: 'absolute', top: -2, left: '50%', transform: 'translateX(-50%) rotate(-2deg)',
-                  width: 76, height: 22, background: 'rgba(214,135,15,0.26)', border: '1px solid rgba(168,94,18,0.2)',
-                }} />
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 mt-3"
-                  style={{ background: '#fdf9f0', border: '1px solid #e6dabd' }}>
-                  <Icon size={18} style={{ color: '#6b5d46' }} strokeWidth={1.5} />
-                </div>
-                <div className="font-mono text-xs mb-2" style={{ color: '#8a7a5e' }}>{award.year}</div>
-                <h3 className="font-note text-xl mb-3" style={{ color: '#241c10' }}>
-                  {award.title}
-                </h3>
-                <p className="font-grotesk text-xs leading-relaxed" style={{ color: '#6b5d46' }}>
-                  {award.description}
-                </p>
-              </motion.div>
-            )
-          })}
+          {achievements.awards.map((award, i) => (
+            <AwardCard key={award.title} award={award} i={i} inView={inView} />
+          ))}
         </div>
           </div>
         </div>

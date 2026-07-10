@@ -1,12 +1,61 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Github, Linkedin, Mail, Phone, ArrowUpRight } from 'lucide-react'
+import { Github, Linkedin, Mail, Instagram, Facebook, ArrowUpRight } from 'lucide-react'
 import profile from '../data/profile.json'
 import TornEdge from './TornEdge'
+import LeetCodeIcon from './LeetCodeIcon'
+import useTilt from '../hooks/useTilt'
 
 const { contact, personal } = profile
 
-const ICON_MAP = { Github, Linkedin, Mail, Phone }
+const ICON_MAP = { Github, Linkedin, Mail, LeetCodeIcon, Instagram, Facebook }
+
+function ContactTile({ s, i, inView }) {
+  const { ref, tilt, glow, onMouseMove, onMouseLeave } = useTilt()
+  const Icon = ICON_MAP[s.icon]
+  const rot = [-1.5, 1, -1, 1.5][i % 4]
+
+  return (
+    <motion.a
+      ref={ref}
+      href={s.href}
+      target={s.external ? '_blank' : undefined}
+      rel={s.external ? 'noreferrer' : undefined}
+      data-plain-hover
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: 0.3 + i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="relative p-5 flex items-center gap-4 text-left overflow-hidden transition-all duration-200 group"
+      style={{
+        background: '#fdf9f0',
+        border: '1px solid #e6dabd',
+        boxShadow: '3px 5px 0 rgba(36,28,16,0.08)',
+        transform: `rotate(${rot}deg) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transformStyle: 'preserve-3d',
+      }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ background: `radial-gradient(circle at ${glow.x}% ${glow.y}%, rgba(36,28,16,0.04) 0%, transparent 65%)` }}
+      />
+      <div style={{
+        position: 'absolute', top: -8, left: '50%', transform: 'translateX(-50%) rotate(-2deg)',
+        width: 60, height: 18, background: 'rgba(214,135,15,0.26)', border: '1px solid rgba(168,94,18,0.2)',
+      }} />
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+        style={{ background: '#f6efdd', border: '1px solid #e6dabd' }}>
+        <Icon size={17} style={{ color: '#6b5d46' }} strokeWidth={1.5} />
+      </div>
+      <div className="min-w-0">
+        <div className="font-syne font-semibold text-sm" style={{ color: '#241c10' }}>{s.label}</div>
+        <div className="font-mono text-xs mt-0.5 truncate" style={{ color: '#8a7a5e' }}>{s.handle}</div>
+      </div>
+      <ArrowUpRight size={14} className="ml-auto flex-shrink-0" style={{ color: '#c2b28c' }} strokeWidth={1.5} />
+    </motion.a>
+  )
+}
 
 export default function Contact() {
   const ref = useRef(null)
@@ -60,39 +109,9 @@ export default function Contact() {
         </motion.p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto mb-14">
-          {contact.map((s, i) => {
-            const Icon = ICON_MAP[s.icon]
-            const rot = [-1.5, 1, -1, 1.5][i % 4]
-            return (
-              <motion.a
-                key={s.label}
-                href={s.href}
-                target={s.external ? '_blank' : undefined}
-                rel={s.external ? 'noreferrer' : undefined}
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="relative p-5 flex items-center gap-4 text-left transition-all duration-300 hover-lift"
-                style={{ background: '#fdf9f0', border: '1px solid #e6dabd', boxShadow: '3px 5px 0 rgba(36,28,16,0.08)', transform: `rotate(${rot}deg)` }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d6870f' }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e6dabd' }}
-              >
-                <div style={{
-                  position: 'absolute', top: -8, left: '50%', transform: 'translateX(-50%) rotate(-2deg)',
-                  width: 60, height: 18, background: 'rgba(214,135,15,0.26)', border: '1px solid rgba(168,94,18,0.2)',
-                }} />
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: '#f6efdd', border: '1px solid #e6dabd' }}>
-                  <Icon size={17} style={{ color: '#6b5d46' }} strokeWidth={1.5} />
-                </div>
-                <div className="min-w-0">
-                  <div className="font-syne font-semibold text-sm" style={{ color: '#241c10' }}>{s.label}</div>
-                  <div className="font-mono text-xs mt-0.5 truncate" style={{ color: '#8a7a5e' }}>{s.handle}</div>
-                </div>
-                <ArrowUpRight size={14} className="ml-auto flex-shrink-0" style={{ color: '#c2b28c' }} strokeWidth={1.5} />
-              </motion.a>
-            )
-          })}
+          {contact.map((s, i) => (
+            <ContactTile key={s.label} s={s} i={i} inView={inView} />
+          ))}
         </div>
 
         <motion.div

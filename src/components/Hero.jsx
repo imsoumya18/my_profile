@@ -171,7 +171,7 @@ export default function Hero() {
                 backgroundImage: `url(${profilePortrait})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                filter: 'grayscale(100%) contrast(1.05)',
+                filter: 'grayscale(100%) contrast(1.05) brightness(1.15)',
               }} />
               <div className="note text-center" style={{ marginTop: '10px', color: '#a85e12', fontSize: '15px' }}>
                 Still debugging — just not from a desk

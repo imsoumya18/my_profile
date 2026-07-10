@@ -101,7 +101,7 @@ function TrekPhoto({ photo, name, rotate, width = 220 }) {
           backgroundImage: `url(${photo})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          filter: 'grayscale(100%) contrast(0.92) brightness(1.18)',
+          filter: 'grayscale(100%) contrast(0.92) brightness(1.32)',
         }} />
         <div className="note text-center" style={{ marginTop: 6 * s, color: '#a85e12', fontSize: Math.max(11, 12 * s) }}>
           {name}

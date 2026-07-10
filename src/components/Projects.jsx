@@ -1,34 +1,21 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Mic2, Scissors, ArrowUpRight, Play } from 'lucide-react'
 import profile from '../data/profile.json'
 import InkCircle from './InkCircle'
 import SectionTag from './SectionTag'
 import TornEdge from './TornEdge'
+import useTilt from '../hooks/useTilt'
 
 const { projects } = profile
 
 const ICON_MAP = { Mic2, Scissors }
 
 function TiltCard({ project, index }) {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
-  const [glow, setGlow] = useState({ x: 50, y: 50 })
-  const cardRef = useRef(null)
+  const { ref: cardRef, tilt, glow, onMouseMove, onMouseLeave } = useTilt()
   const inView  = useInView(cardRef, { once: true, margin: '-60px' })
   const Icon    = ICON_MAP[project.icon]
   const baseRot = index % 2 === 0 ? -1 : 1
-
-  const handleMouseMove = (e) => {
-    const rect = cardRef.current.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width
-    const y = (e.clientY - rect.top)  / rect.height
-    setTilt({ x: (y - 0.5) * -10, y: (x - 0.5) * 10 })
-    setGlow({ x: x * 100, y: y * 100 })
-  }
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 })
-    setGlow({ x: 50, y: 50 })
-  }
 
   return (
     <motion.div
@@ -47,8 +34,8 @@ function TiltCard({ project, index }) {
           transform: `rotate(${baseRot}deg) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
           transformStyle: 'preserve-3d',
         }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
       >
         <div style={{
           position: 'absolute', top: -2, left: '50%', transform: 'translateX(-50%) rotate(-2deg)',

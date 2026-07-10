@@ -11,12 +11,29 @@ import { makeRng, circlePath } from './InkCircle'
 // it reads correctly over any section's background.
 const NIB_TIP = { x: 12, y: 23 }
 const NIB_ANGLE = 135
-const NIB_PATH = 'M9,1 h6 a2,2 0 0 1 2,2 v2 a2,2 0 0 1 -2,2 h-6 a2,2 0 0 1 -2,-2 v-2 a2,2 0 0 1 2,-2 Z M7,6 L3,13 L12,23 L21,13 L17,6 Z M10.2,11 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0 Z M11.6,12.8 L11.6,21 L12.4,21 L12.4,12.8 Z'
+const NIB_PATH = 'M9.75,1 h4.5 a1.5,1.5 0 0 1 1.5,1.5 v3 a1.5,1.5 0 0 1 -1.5,1.5 h-4.5 a1.5,1.5 0 0 1 -1.5,-1.5 v-3 a1.5,1.5 0 0 1 1.5,-1.5 Z M8.25,6 L5.25,13 L12,23 L18.75,13 L15.75,6 Z M10.5,11 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z M11.7,12.8 L11.7,21 L12.3,21 L12.3,12.8 Z'
 
 // Hovering a link circles it with the same hand-drawn wobble construction
-// as InkCircle's "emphasis" mark elsewhere on the site, instead of a second,
-// unrelated hover motif.
+// as InkCircle's "emphasis" mark elsewhere on the site, in the site's own
+// saffron accent. Several nav items also turn saffron on hover, so the
+// circle gets a thin dark "halo" stroke underneath it (see the two <path>s
+// below) purely so its line stays legible crossing same-colored text —
+// the halo isn't a color change, just an outline.
+const HOVER_COLOR = '#a85e12'
 const circleRng = makeRng(7)
+
+// Many hover targets are full-width flex rows (nav dropdown items, padded
+// buttons) — their own bounding box is the whole padded cell, not the icon
+// and label inside it. A Range over the element's contents bounds only
+// what's actually rendered (text runs, inline icons), skipping the
+// element's own padding, so the circle wraps the visible content instead
+// of the whole row.
+function contentRect(el) {
+  const range = document.createRange()
+  range.selectNodeContents(el)
+  const r = range.getBoundingClientRect()
+  return r.width > 0 && r.height > 0 ? r : el.getBoundingClientRect()
+}
 
 function luminance(rgbStr) {
   const m = rgbStr.match(/\d+/g)
@@ -52,6 +69,7 @@ export default function CustomCursor() {
   const [enabled, setEnabled] = useState(false)
   const [circle, setCircle] = useState(null)
   const circlePathRef = useRef(null)
+  const haloPathRef = useRef(null)
 
   useEffect(() => {
     setEnabled(window.matchMedia('(hover: hover) and (pointer: fine)').matches)
@@ -75,12 +93,19 @@ export default function CustomCursor() {
     const bound = new WeakSet()
     const onEnter = (e) => {
       hoverRef.current = true
-      const r = e.currentTarget.getBoundingClientRect()
-      const padX = 10
-      const padY = 8
+      // Cards and pills with their own rich hover treatment (border
+      // highlight, lift, background swap) mark themselves data-plain-hover
+      // so the circle doesn't pile a second hover effect on top.
+      if (e.currentTarget.hasAttribute('data-plain-hover')) return
+      const r = contentRect(e.currentTarget)
+      const padX = 14
+      const padY = 11
       const w = r.width + padX * 2
       const h = r.height + padY * 2
-      const d = circlePath(w / 2, h / 2, w / 2 - 2, h / 2 - 2, circleRng)
+      // Tighter radius jitter than InkCircle's default — this circle sits
+      // much closer to its content than a stat-number emphasis mark does,
+      // so a wide wobble dips inward enough to cut through the text.
+      const d = circlePath(w / 2, h / 2, w / 2 - 2, h / 2 - 2, circleRng, 8, -0.035, 0.02)
       setCircle({ left: r.left - padX, top: r.top - padY, w, h, d })
     }
     const onLeave = () => {
@@ -108,9 +133,16 @@ export default function CustomCursor() {
           `translate(${pos.current.x - NIB_TIP.x}px, ${pos.current.y - NIB_TIP.y}px)`
       }
       if (nibPathRef.current) {
+        // Background-color detection only ever knows about the element's
+        // own CSS background — it says nothing about large dark text (or
+        // an image) sitting directly under the nib, which can still be the
+        // same tone as the fill and make the nib disappear into a letter.
+        // A thin outline in the opposite tone keeps the silhouette visible
+        // regardless of what's immediately behind it.
         nibPathRef.current.style.fill = hoverRef.current
-          ? '#d6870f'
+          ? HOVER_COLOR
           : (onDarkRef.current ? '#fdf9f0' : '#241c10')
+        nibPathRef.current.style.stroke = onDarkRef.current ? '#241c10' : '#fdf9f0'
       }
       raf = requestAnimationFrame(loop)
     }
@@ -125,16 +157,21 @@ export default function CustomCursor() {
 
   useEffect(() => {
     const el = circlePathRef.current
-    if (!circle || !el) return
+    const halo = haloPathRef.current
+    if (!circle || !el || !halo) return
     const len = el.getTotalLength()
-    el.style.transition = 'none'
-    el.style.strokeDasharray = `${len}`
-    el.style.strokeDashoffset = `${len}`
+    for (const p of [el, halo]) {
+      p.style.transition = 'none'
+      p.style.strokeDasharray = `${len}`
+      p.style.strokeDashoffset = `${len}`
+    }
     // Force a layout flush so the dash reset above lands before the
     // transition kicks off, otherwise both changes get batched together.
     el.getBoundingClientRect()
-    el.style.transition = 'stroke-dashoffset 0.35s cubic-bezier(0.22, 1, 0.36, 1)'
-    el.style.strokeDashoffset = '0'
+    for (const p of [el, halo]) {
+      p.style.transition = 'stroke-dashoffset 0.35s cubic-bezier(0.22, 1, 0.36, 1)'
+      p.style.strokeDashoffset = '0'
+    }
   }, [circle])
 
   if (!enabled) return null
@@ -153,10 +190,12 @@ export default function CustomCursor() {
           ref={nibPathRef}
           d={NIB_PATH}
           fillRule="evenodd"
+          strokeWidth="0.6"
+          strokeLinejoin="round"
           style={{
             transformOrigin: `${NIB_TIP.x}px ${NIB_TIP.y}px`,
             transform: `rotate(${NIB_ANGLE}deg)`,
-            transition: 'fill 0.2s',
+            transition: 'fill 0.2s, stroke 0.2s',
           }}
         />
       </svg>
@@ -168,11 +207,20 @@ export default function CustomCursor() {
           aria-hidden="true"
         >
           <path
+            ref={haloPathRef}
+            d={circle.d}
+            fill="none"
+            stroke="#241c10"
+            strokeWidth="2.8"
+            strokeLinecap="round"
+            opacity="0.5"
+          />
+          <path
             ref={circlePathRef}
             d={circle.d}
             fill="none"
-            stroke="#d6870f"
-            strokeWidth="2.2"
+            stroke={HOVER_COLOR}
+            strokeWidth="1.5"
             strokeLinecap="round"
           />
         </svg>

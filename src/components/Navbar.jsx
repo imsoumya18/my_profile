@@ -109,6 +109,7 @@ export default function Navbar() {
             onMouseLeave={() => setAsideOpen(false)}
           >
             <button
+              data-plain-hover
               className="inline-flex items-center gap-1 font-grotesk text-xs px-3.5 py-1.5 rounded-full border transition-all duration-200"
               style={{ color: '#3a2f1f', borderColor: '#e6dabd', background: '#f6efdd' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d6870f'; e.currentTarget.style.color = '#a85e12'; e.currentTarget.style.background = '#f3ddac' }}
@@ -178,6 +179,7 @@ export default function Navbar() {
               href={href}
               target="_blank"
               rel="noreferrer"
+              data-plain-hover
               className="inline-flex items-center gap-1.5 font-grotesk text-xs px-3.5 py-1.5 rounded-full border transition-all duration-200"
               style={{ color: '#fdf9f0', borderColor: '#241c10', background: '#241c10' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#3a2f1f'; e.currentTarget.style.borderColor = '#3a2f1f' }}
@@ -279,6 +281,7 @@ export default function Navbar() {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
+                  data-plain-hover
                   className="inline-flex items-center justify-center gap-2 font-grotesk text-sm px-4 py-3 rounded-full"
                   style={{ color: '#fdf9f0', background: '#241c10' }}
                 >
