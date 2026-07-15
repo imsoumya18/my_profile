@@ -633,6 +633,24 @@
       { "url": "https://www.instagram.com/p/DTVIqY_D42-" }
     ]
   },
+  "reading": {
+    "_comment": "PLACEHOLDER data — swap in the real list whenever ready",
+    "tagline": "Fiction for the commute, nonfiction for the itch to understand how things actually work. Logged here mostly so I remember what I thought at the time.",
+    "currentlyReading": {
+      "title": "Deep Work",
+      "author": "Cal Newport",
+      "type": "Nonfiction",
+      "progress": "62%"
+    },
+    "books": [
+      { "title": "Project Hail Mary", "author": "Andy Weir", "type": "Novel", "finished": "Mar 2026", "rating": 5, "note": "Read the last third in one sitting. Rare for me." },
+      { "title": "Sapiens", "author": "Yuval Noah Harari", "type": "Nonfiction", "finished": "Jan 2026", "rating": 4, "note": "The myths-as-infrastructure framing stuck with me." },
+      { "title": "The Pragmatic Programmer", "author": "Hunt & Thomas", "type": "Nonfiction", "finished": "Nov 2025", "rating": 4, "note": "Reread for the third time, still finds new things to fix." },
+      { "title": "Atomic Habits", "author": "James Clear", "type": "Nonfiction", "finished": "Sep 2025", "rating": 3, "note": "Good scaffolding, thin on the actual hard parts." },
+      { "title": "Dune", "author": "Frank Herbert", "type": "Novel", "finished": "Jul 2025", "rating": 5, "note": "Should've read this a decade ago." },
+      { "title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "type": "Nonfiction", "finished": "Apr 2025", "rating": 4, "note": "Dense. Worth the slow pace." }
+    ]
+  },
   "contact": [
     {
       "label": "GitHub",

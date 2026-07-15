@@ -149,14 +149,16 @@ export default function Navbar() {
                     <Camera size={13} strokeWidth={1.5} />
                     Clicking
                   </Link>
-                  <div
-                    className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs cursor-default"
-                    style={{ color: '#c2b28c' }}
+                  <Link
+                    to="/reading"
+                    className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs transition-colors duration-200"
+                    style={{ color: '#241c10' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#f6efdd' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                   >
                     <BookOpen size={13} strokeWidth={1.5} />
                     Reading
-                    <span className="font-mono ml-auto" style={{ fontSize: '9px', color: '#c2b28c' }}>SOON</span>
-                  </div>
+                  </Link>
                   <div
                     className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs cursor-default"
                     style={{ color: '#c2b28c' }}
@@ -259,11 +261,15 @@ export default function Navbar() {
                 <Camera size={15} strokeWidth={1.5} />
                 Clicking
               </Link>
-              <div className="flex items-center gap-3 py-3 font-grotesk text-sm" style={{ color: '#c2b28c', borderBottom: '1px solid #ede3c8' }}>
+              <Link
+                to="/reading"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 py-3 font-grotesk text-sm"
+                style={{ color: '#241c10', borderBottom: '1px solid #ede3c8' }}
+              >
                 <BookOpen size={15} strokeWidth={1.5} />
                 Reading
-                <span className="font-mono ml-auto" style={{ fontSize: '9px', color: '#c2b28c' }}>SOON</span>
-              </div>
+              </Link>
               <div className="flex items-center gap-3 py-3 font-grotesk text-sm" style={{ color: '#c2b28c' }}>
                 <Clapperboard size={15} strokeWidth={1.5} />
                 Watching

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import CustomCursor from './components/CustomCursor'
+import HoverCircle from './components/HoverCircle'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -14,6 +14,7 @@ import Achievements from './components/Achievements'
 import Contact from './components/Contact'
 import TreksPage from './pages/TreksPage'
 import ClickingPage from './pages/ClickingPage'
+import ReadingPage from './pages/ReadingPage'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -56,13 +57,14 @@ function Portfolio() {
 export default function App() {
   return (
     <BrowserRouter>
-      <CustomCursor />
+      <HoverCircle />
       <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/"       element={<Portfolio />} />
         <Route path="/treks"  element={<TreksPage />} />
         <Route path="/clicking" element={<ClickingPage />} />
+        <Route path="/reading" element={<ReadingPage />} />
       </Routes>
     </BrowserRouter>
   )

@@ -14,6 +14,7 @@ const PATHS = {
   trophy: 'M16 8h16v9c0 6.5-4.5 12-8 12s-8-5.5-8-12z M16 10c-4 0-6 2-6 5s2 6 6 7 M32 10c4 0 6 2 6 5s-2 6-6 7 M24 29v7 M16 40c0-2 1.5-4 8-4s8 2 8 4 M18 40h12',
   terminal: 'M6 16h36v22a2 2 0 0 1-2 2h-32a2 2 0 0 1-2-2z M6 16v-4a2 2 0 0 1 2-2h32a2 2 0 0 1 2 2v4 M11 12.5h.01 M16 12.5h.01 M21 12.5h.01 M13 24l6 5-6 5 M24 34h10',
   aperture: 'M24,8 a16,16 0 1,0 0.01,0 M24,10 L24,18 M35.8,17 L29,21.5 M35.8,31 L29,26.5 M24,38 L24,30 M12.2,31 L19,26.5 M12.2,17 L19,21.5',
+  bookmark: 'M14,6 L34,6 L34,40 L24,31 L14,40 Z',
 }
 
 export default function Doodle({ type, size = 56, rotate = 0, opacity = 0.16, color = '#241c10', className = '' }) {
