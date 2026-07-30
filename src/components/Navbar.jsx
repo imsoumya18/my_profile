@@ -109,7 +109,6 @@ export default function Navbar() {
             onMouseLeave={() => setAsideOpen(false)}
           >
             <button
-              data-plain-hover
               className="inline-flex items-center gap-1 font-grotesk text-xs px-3.5 py-1.5 rounded-full border transition-all duration-200"
               style={{ color: '#3a2f1f', borderColor: '#e6dabd', background: '#f6efdd' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d6870f'; e.currentTarget.style.color = '#a85e12'; e.currentTarget.style.background = '#f3ddac' }}
@@ -159,14 +158,16 @@ export default function Navbar() {
                     <BookOpen size={13} strokeWidth={1.5} />
                     Reading
                   </Link>
-                  <div
-                    className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs cursor-default"
-                    style={{ color: '#c2b28c' }}
+                  <Link
+                    to="/watching"
+                    className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs transition-colors duration-200"
+                    style={{ color: '#241c10' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#f6efdd' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                   >
                     <Clapperboard size={13} strokeWidth={1.5} />
                     Watching
-                    <span className="font-mono ml-auto" style={{ fontSize: '9px', color: '#c2b28c' }}>SOON</span>
-                  </div>
+                  </Link>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -181,7 +182,6 @@ export default function Navbar() {
               href={href}
               target="_blank"
               rel="noreferrer"
-              data-plain-hover
               className="inline-flex items-center gap-1.5 font-grotesk text-xs px-3.5 py-1.5 rounded-full border transition-all duration-200"
               style={{ color: '#fdf9f0', borderColor: '#241c10', background: '#241c10' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#3a2f1f'; e.currentTarget.style.borderColor = '#3a2f1f' }}
@@ -270,11 +270,15 @@ export default function Navbar() {
                 <BookOpen size={15} strokeWidth={1.5} />
                 Reading
               </Link>
-              <div className="flex items-center gap-3 py-3 font-grotesk text-sm" style={{ color: '#c2b28c' }}>
+              <Link
+                to="/watching"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 py-3 font-grotesk text-sm"
+                style={{ color: '#241c10' }}
+              >
                 <Clapperboard size={15} strokeWidth={1.5} />
                 Watching
-                <span className="font-mono ml-auto" style={{ fontSize: '9px', color: '#c2b28c' }}>SOON</span>
-              </div>
+              </Link>
             </div>
 
             <div className="flex flex-col gap-3">
@@ -287,7 +291,6 @@ export default function Navbar() {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  data-plain-hover
                   className="inline-flex items-center justify-center gap-2 font-grotesk text-sm px-4 py-3 rounded-full"
                   style={{ color: '#fdf9f0', background: '#241c10' }}
                 >

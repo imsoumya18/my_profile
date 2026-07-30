@@ -67,6 +67,12 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #ddd0ae; border-radius: 2px; }
 
+/* ─── Hide scrollbar on horizontally-scrolling elements (e.g. the
+   Watching filmstrip reel) — edge fades + arrow buttons are the
+   discoverability affordance instead. ─── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+
 ::selection {
   background: rgba(36,28,16,0.1);
   color: #241c10;

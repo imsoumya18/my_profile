@@ -21,7 +21,6 @@ function ContactTile({ s, i, inView }) {
       href={s.href}
       target={s.external ? '_blank' : undefined}
       rel={s.external ? 'noreferrer' : undefined}
-      data-plain-hover
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.3 + i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}

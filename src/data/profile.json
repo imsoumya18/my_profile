@@ -651,6 +651,20 @@
       { "title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "type": "Nonfiction", "finished": "Apr 2025", "rating": 4, "note": "Dense. Worth the slow pace." }
     ]
   },
+  "watching": {
+    "tagline": "Movies, shows, documentaries, and the occasional YouTube rabbit hole. Logged here in the order the reel actually ran.",
+    "nowWatching": {
+      "title": "Amit Kilhor Exposes The Darkest Truths About How India Really Works",
+      "type": "Podcast",
+      "url": "https://youtu.be/fbWf6HjaNiA"
+    },
+    "titles": [
+      { "title": "14 Peaks: Nothing Is Impossible", "type": "Documentary", "watched": "Jul 2026", "poster": "14-peaks" },
+      { "title": "Gram Chikitsalaya (S2)", "type": "Series", "watched": "Jul 2026", "poster": "gram-chikitsalaya" },
+      { "title": "Gram Chikitsalaya (S1)", "type": "Series", "watched": "Jul 2026", "poster": "gram-chikitsalaya" },
+      { "title": "Balan: The Boy", "type": "Movie", "watched": "Jun 2026", "poster": "balan-the-boy" }
+    ]
+  },
   "contact": [
     {
       "label": "GitHub",

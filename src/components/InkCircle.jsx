@@ -26,7 +26,7 @@ export function makeRng(seed) {
 // more, smaller segments (with a matching kappa for each one's own sweep)
 // keeps the same hand-drawn wobble but actually traces the ellipse at any
 // aspect ratio.
-export function circlePath(cx, cy, rx, ry, rng, segments = 8, drMin = -0.08, drMax = 0.03, startMin = 150, startMax = 190, dThetaMin = 0.05, dThetaMax = 0.3) {
+function circlePath(cx, cy, rx, ry, rng, segments = 8, drMin = -0.08, drMax = 0.03, startMin = 150, startMax = 190, dThetaMin = 0.05, dThetaMax = 0.3) {
   const baseStep = (2 * Math.PI) / segments
   const kappa = (4 / 3) * Math.tan(baseStep / 4)
   const beta = Math.atan(kappa)
