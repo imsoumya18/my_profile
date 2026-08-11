@@ -388,16 +388,16 @@
             "photo": "tungnath"
           },
           {
-            "name": "Valley of Flowers",
-            "status": "planned",
-            "plannedDate": "Aug 2026",
+            "name": "Valley of Flowers and Hemkund Sahib",
+            "status": "done",
             "difficulty": "Moderate",
             "difficultyScore": 5,
-            "altitude": 3658,
-            "season": "Aug",
+            "altitude": 4633,
+            "season": null,
             "location": "Uttarakhand, India",
             "description": "A step up in scenery and duration — non-technical but a solid stamina and logistics test.",
-            "altitudeFt": 12000
+            "completedDate": "Aug 2026",
+            "altitudeFt": 15200
           }
         ]
       },
