@@ -100,7 +100,7 @@ function TrekPhoto({ photo, name, rotate, width = 220 }) {
           aspectRatio: '4 / 5',
           backgroundImage: `url(${photo})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'center top',
           filter: 'grayscale(100%) contrast(0.92) brightness(1.32)',
         }} />
         <div className="note text-center" style={{ marginTop: 6 * s, color: '#a85e12', fontSize: Math.max(11, 12 * s) }}>
@@ -362,7 +362,7 @@ export default function TreksPage() {
                   filter: 'grayscale(100%) contrast(1.05)',
                 }} />
                 <div className="note text-center" style={{ marginTop: '10px', color: '#a85e12', fontSize: '15px' }}>
-                  Tungnath ridge · Dec 2025
+                  Hemkund Sahib · Aug 2026
                 </div>
               </div>
             </div>
