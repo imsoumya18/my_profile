@@ -157,14 +157,14 @@ function FilmstripReel({ titles }) {
   // left, looping back to the start once it runs out of room. Shorter
   // reels already show everything at a glance, so they stay put.
   //
-  // Pausing is driven off the element's own `scroll` event rather than
-  // hover, so it only reacts to scrolling that's actually happening (wheel,
-  // trackpad, touch drag, arrow keys) — not just the cursor resting nearby.
-  // Every write we make to scrollLeft is flagged via `selfScroll` first so
-  // it doesn't re-trigger the pause on itself; anything unflagged came from
-  // the user. This also stops the old bug where a manual drag that landed
-  // near the end got read as "reached the end" and yanked back to 0 —
-  // the auto-scroll simply doesn't touch scrollLeft while paused.
+  // Pauses immediately while hovered (mouse enter/leave), and also on any
+  // actual scroll activity (wheel, trackpad, touch drag, arrow keys) for a
+  // couple seconds after. Every write we make to scrollLeft is flagged via
+  // `selfScroll` first so it doesn't re-trigger the scroll-based pause on
+  // itself; anything unflagged came from the user. This also avoids the
+  // earlier bug where a manual drag that landed near the end got read as
+  // "reached the end" and yanked back to 0 — the auto-scroll simply
+  // doesn't touch scrollLeft while paused.
   useEffect(() => {
     const el = scrollRef.current
     if (!el) return
@@ -173,11 +173,12 @@ function FilmstripReel({ titles }) {
 
     let raf
     let selfScroll = false
+    let hovered = false
     const step = () => {
-      if (!pausedRef.current && el.scrollWidth > el.clientWidth) {
+      if (!pausedRef.current && !hovered && el.scrollWidth > el.clientWidth) {
         const maxScroll = el.scrollWidth - el.clientWidth
         selfScroll = true
-        el.scrollLeft = el.scrollLeft >= maxScroll - 1.4 ? 0 : el.scrollLeft + 1.4
+        el.scrollLeft = el.scrollLeft >= maxScroll - 2.45 ? 0 : el.scrollLeft + 2.45
       }
       raf = requestAnimationFrame(step)
     }
@@ -189,10 +190,25 @@ function FilmstripReel({ titles }) {
     }
     el.addEventListener('scroll', onScroll, { passive: true })
 
+    // Hover is tracked from real cursor coordinates on `mousemove`, not
+    // `mouseenter`/`mouseleave` — Safari/WebKit is known to fire those
+    // synthetically whenever the DOM changes under an already-stationary
+    // cursor (not just on actual pointer movement), which could latch this
+    // into a permanently-"hovered", permanently-frozen state with no way
+    // to clear it short of the user nudging their mouse. Computing hover
+    // from the cursor's live position instead means it can only change in
+    // response to real movement.
+    const onMouseMove = (e) => {
+      const r = el.getBoundingClientRect()
+      hovered = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
+    }
+    window.addEventListener('mousemove', onMouseMove, { passive: true })
+
     return () => {
       cancelAnimationFrame(raf)
       clearTimeout(resumeTimeout.current)
       el.removeEventListener('scroll', onScroll)
+      window.removeEventListener('mousemove', onMouseMove)
     }
   }, [titles])
 
