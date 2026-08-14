@@ -140,11 +140,14 @@ function FilmstripReel({ titles }) {
   const scrollRef = useRef(null)
   const pausedRef = useRef(false)
   const resumeTimeout = useRef(null)
-  const scrollBy = (dir) => {
-    scrollRef.current?.scrollBy({ left: dir * 330, behavior: 'smooth' })
+  const pauseForABit = () => {
     pausedRef.current = true
     clearTimeout(resumeTimeout.current)
     resumeTimeout.current = setTimeout(() => { pausedRef.current = false }, 2500)
+  }
+  const scrollBy = (dir) => {
+    scrollRef.current?.scrollBy({ left: dir * 330, behavior: 'smooth' })
+    pauseForABit()
   }
   const holes = {
     backgroundImage: 'repeating-linear-gradient(to right, #fdf9f0 0 7px, transparent 7px 17px)',
@@ -152,8 +155,16 @@ function FilmstripReel({ titles }) {
 
   // Reels with more than 4 titles keep drifting on their own, right to
   // left, looping back to the start once it runs out of room. Shorter
-  // reels already show everything at a glance, so they stay put. Pauses
-  // on hover/touch and whenever the OS asks for reduced motion.
+  // reels already show everything at a glance, so they stay put.
+  //
+  // Pausing is driven off the element's own `scroll` event rather than
+  // hover, so it only reacts to scrolling that's actually happening (wheel,
+  // trackpad, touch drag, arrow keys) — not just the cursor resting nearby.
+  // Every write we make to scrollLeft is flagged via `selfScroll` first so
+  // it doesn't re-trigger the pause on itself; anything unflagged came from
+  // the user. This also stops the old bug where a manual drag that landed
+  // near the end got read as "reached the end" and yanked back to 0 —
+  // the auto-scroll simply doesn't touch scrollLeft while paused.
   useEffect(() => {
     const el = scrollRef.current
     if (!el) return
@@ -161,29 +172,27 @@ function FilmstripReel({ titles }) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     let raf
+    let selfScroll = false
     const step = () => {
       if (!pausedRef.current && el.scrollWidth > el.clientWidth) {
         const maxScroll = el.scrollWidth - el.clientWidth
+        selfScroll = true
         el.scrollLeft = el.scrollLeft >= maxScroll - 1.4 ? 0 : el.scrollLeft + 1.4
       }
       raf = requestAnimationFrame(step)
     }
     raf = requestAnimationFrame(step)
 
-    const pause = () => { pausedRef.current = true }
-    const resume = () => { pausedRef.current = false }
-    el.addEventListener('mouseenter', pause)
-    el.addEventListener('mouseleave', resume)
-    el.addEventListener('touchstart', pause, { passive: true })
-    el.addEventListener('touchend', resume)
+    const onScroll = () => {
+      if (selfScroll) { selfScroll = false; return }
+      pauseForABit()
+    }
+    el.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       cancelAnimationFrame(raf)
       clearTimeout(resumeTimeout.current)
-      el.removeEventListener('mouseenter', pause)
-      el.removeEventListener('mouseleave', resume)
-      el.removeEventListener('touchstart', pause)
-      el.removeEventListener('touchend', resume)
+      el.removeEventListener('scroll', onScroll)
     }
   }, [titles])
 
