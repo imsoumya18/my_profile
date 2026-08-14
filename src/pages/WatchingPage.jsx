@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Star, Play, Film, ChevronLeft, ChevronRight } from 'lucide-react'
 import profile from '../data/profile.json'
@@ -39,6 +39,30 @@ const FALLBACK_GRADIENTS = [
   'linear-gradient(160deg, #a85e12 0%, #6b3d0f 100%)',
 ]
 
+// Reels render in this order; any type not listed here (data drifts faster
+// than code) still gets its own reel, just tacked on at the end.
+const CATEGORY_ORDER = ['Movie', 'Series', 'Documentary', 'Podcast', 'YouTube']
+const CATEGORY_LABELS = {
+  Movie: 'Movies',
+  Series: 'Series',
+  Documentary: 'Documentaries',
+  Podcast: 'Podcasts',
+  YouTube: 'YouTube',
+}
+
+function groupByType(titles) {
+  const groups = {}
+  titles.forEach((t) => {
+    if (!groups[t.type]) groups[t.type] = []
+    groups[t.type].push(t)
+  })
+  const order = [
+    ...CATEGORY_ORDER.filter((c) => groups[c]),
+    ...Object.keys(groups).filter((c) => !CATEGORY_ORDER.includes(c)),
+  ]
+  return order.map((type) => ({ type, titles: groups[type] }))
+}
+
 function StarRow({ rating, size = 11 }) {
   return (
     <div className="flex items-center gap-0.5">
@@ -57,7 +81,7 @@ function StarRow({ rating, size = 11 }) {
 
 function FrameCard({ title, index }) {
   const typeColor = TYPE_COLORS[title.type] || '#6b5d46'
-  const poster = title.poster && posters[title.poster]
+  const poster = (title.poster && posters[title.poster]) || youtubeThumbnail(title.url)
 
   return (
     <motion.div
@@ -65,13 +89,13 @@ function FrameCard({ title, index }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="relative flex-shrink-0"
-      style={{ width: 250, background: '#fdf9f0', border: '3px solid #241c10' }}
+      style={{ width: 300, background: '#fdf9f0', border: '3px solid #241c10' }}
     >
       {poster ? (
-        <div style={{ aspectRatio: '3 / 4', backgroundImage: `url(${poster})`, backgroundSize: 'cover', backgroundPosition: 'center top' }} />
+        <div style={{ aspectRatio: '4 / 3', backgroundImage: `url(${poster})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
       ) : (
         <div className="flex items-center justify-center font-hand" style={{
-          aspectRatio: '3 / 4', background: FALLBACK_GRADIENTS[index % FALLBACK_GRADIENTS.length],
+          aspectRatio: '4 / 3', background: FALLBACK_GRADIENTS[index % FALLBACK_GRADIENTS.length],
           fontSize: '34px', color: 'rgba(255,253,247,0.88)',
         }}>
           {title.title[0]}
@@ -114,10 +138,54 @@ function FrameCard({ title, index }) {
 // every title ever watched.
 function FilmstripReel({ titles }) {
   const scrollRef = useRef(null)
-  const scrollBy = (dir) => scrollRef.current?.scrollBy({ left: dir * 280, behavior: 'smooth' })
+  const pausedRef = useRef(false)
+  const resumeTimeout = useRef(null)
+  const scrollBy = (dir) => {
+    scrollRef.current?.scrollBy({ left: dir * 330, behavior: 'smooth' })
+    pausedRef.current = true
+    clearTimeout(resumeTimeout.current)
+    resumeTimeout.current = setTimeout(() => { pausedRef.current = false }, 2500)
+  }
   const holes = {
     backgroundImage: 'repeating-linear-gradient(to right, #fdf9f0 0 7px, transparent 7px 17px)',
   }
+
+  // Reels with more than 4 titles keep drifting on their own, right to
+  // left, looping back to the start once it runs out of room. Shorter
+  // reels already show everything at a glance, so they stay put. Pauses
+  // on hover/touch and whenever the OS asks for reduced motion.
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    if (titles.length <= 4) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let raf
+    const step = () => {
+      if (!pausedRef.current && el.scrollWidth > el.clientWidth) {
+        const maxScroll = el.scrollWidth - el.clientWidth
+        el.scrollLeft = el.scrollLeft >= maxScroll - 1.4 ? 0 : el.scrollLeft + 1.4
+      }
+      raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+
+    const pause = () => { pausedRef.current = true }
+    const resume = () => { pausedRef.current = false }
+    el.addEventListener('mouseenter', pause)
+    el.addEventListener('mouseleave', resume)
+    el.addEventListener('touchstart', pause, { passive: true })
+    el.addEventListener('touchend', resume)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(resumeTimeout.current)
+      el.removeEventListener('mouseenter', pause)
+      el.removeEventListener('mouseleave', resume)
+      el.removeEventListener('touchstart', pause)
+      el.removeEventListener('touchend', resume)
+    }
+  }, [titles])
 
   return (
     <div className="relative">
@@ -235,7 +303,21 @@ export default function WatchingPage() {
         </div>
 
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 relative">
-          <FilmstripReel titles={watching.titles} />
+          <div className="flex flex-col gap-14">
+            {groupByType(watching.titles).map(({ type, titles }) => (
+              <div key={type}>
+                <div className="flex items-baseline gap-3 mb-5">
+                  <h2 className="font-note text-2xl" style={{ color: '#241c10' }}>
+                    {CATEGORY_LABELS[type] || type}
+                  </h2>
+                  <span className="font-mono text-xs" style={{ color: '#a3947a' }}>
+                    {titles.length}
+                  </span>
+                </div>
+                <FilmstripReel titles={titles} />
+              </div>
+            ))}
+          </div>
 
           <div className="flex justify-center mt-14">
             <div className="w-6 h-6 rounded-full border-2 border-dashed flex items-center justify-center"

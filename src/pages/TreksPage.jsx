@@ -16,10 +16,7 @@ const trekPhotos = Object.fromEntries(
   Object.entries(trekPhotoModules).map(([path, url]) => [path.match(/([^/]+)\.\w+$/)[1], url])
 )
 
-// Flatten tiers into a sequenced list with tier metadata attached
-const allTreks = treks.tiers.flatMap((tier) =>
-  tier.treks.map((t) => ({ ...t, tier }))
-)
+const allTreks = treks.list
 
 const doneTreks    = allTreks.filter((t) => t.status === 'done')
 const doneCount    = doneTreks.length
@@ -86,7 +83,7 @@ function NodeDot({ isDone, isPlanned }) {
 
 // A hanging Polaroid — same treatment as the hero photos elsewhere on the
 // site, sized down to sit beside a trek card.
-function TrekPhoto({ photo, name, rotate, width = 220 }) {
+function TrekPhoto({ photo, name, rotate, width = 242, fit = 'cover', brightness = 1.32 }) {
   if (!photo) return null
   const s = width / 190
   return (
@@ -96,13 +93,20 @@ function TrekPhoto({ photo, name, rotate, width = 220 }) {
         width: 58 * s, height: 18 * s, background: 'rgba(214,135,15,0.3)', border: '1px solid rgba(168,94,18,0.22)', zIndex: 2,
       }} />
       <div style={{ background: '#fffdf7', padding: `${9 * s}px ${9 * s}px ${26 * s}px`, boxShadow: '0 14px 28px rgba(36,28,16,0.18), 0 2px 4px rgba(36,28,16,0.1)' }}>
-        <div style={{
-          aspectRatio: '4 / 5',
-          backgroundImage: `url(${photo})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center top',
-          filter: 'grayscale(100%) contrast(0.92) brightness(1.32)',
-        }} />
+        <div style={{ aspectRatio: '4 / 5', background: '#fffdf7', overflow: 'hidden' }}>
+          <img
+            src={photo}
+            alt={name}
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'block',
+              objectFit: fit,
+              objectPosition: fit === 'contain' ? 'center' : 'center top',
+              filter: `grayscale(100%) contrast(0.92) brightness(${brightness})`,
+            }}
+          />
+        </div>
         <div className="note text-center" style={{ marginTop: 6 * s, color: '#a85e12', fontSize: Math.max(11, 12 * s) }}>
           {name}
         </div>
@@ -196,7 +200,7 @@ function TrekNode({ trek, isLeft }) {
         <div className="flex-1 min-w-0 pb-3">
           {photo && (
             <div className="flex justify-center mb-4">
-              <TrekPhoto photo={photo} name={trek.name} rotate={isLeft ? -2 : 2} />
+              <TrekPhoto photo={photo} name={trek.name} rotate={isLeft ? -2 : 2} fit={trek.photoFit || 'cover'} brightness={trek.photoBrightness} />
             </div>
           )}
           <TrekCard trek={trek} isDone={isDone} isPlanned={isPlanned} tilt={isLeft ? -0.8 : 0.6} />
@@ -221,51 +225,7 @@ function TrekNode({ trek, isLeft }) {
 
         {/* Other side of the spine — the photo hangs here, kept close to the line */}
         <div className="w-[calc(50%-28px)] flex pt-2" style={{ justifyContent: isLeft ? 'flex-start' : 'flex-end' }}>
-          {photo && <TrekPhoto photo={photo} name={trek.name} rotate={isLeft ? 3 : -3} />}
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
-function TierHeader({ tier, tierIndex }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
-  const isFirst = tierIndex === 0
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`w-full ${isFirst ? '' : 'mt-6'}`}
-    >
-      {/* Mobile / tablet */}
-      <div className="flex md:hidden items-center gap-4">
-        <div className="w-8 h-8 rounded-full flex items-center justify-center font-syne font-bold text-sm flex-shrink-0"
-          style={{ background: tier.number === 0 ? '#a85e12' : '#f6efdd', color: tier.number === 0 ? '#fdf9f0' : '#241c10', border: '1px solid #e6dabd' }}>
-          {tier.number === 0 ? '★' : tier.number}
-        </div>
-        <div>
-          <h2 className="font-note text-2xl" style={{ color: '#241c10' }}>{tier.label}</h2>
-          <p className="font-mono text-xs" style={{ color: '#8a7a5e' }}>{tier.difficulty}</p>
-        </div>
-      </div>
-
-      {/* Desktop: split across the spine */}
-      <div className="hidden md:flex items-center gap-0 w-full">
-        <div className="w-[calc(50%-28px)] flex justify-end pr-4">
-          <p className="font-mono text-xs text-right" style={{ color: '#8a7a5e' }}>{tier.difficulty}</p>
-        </div>
-        <div className="w-14 flex justify-center flex-shrink-0">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center font-syne font-bold text-sm z-10"
-            style={{ background: tier.number === 0 ? '#a85e12' : '#f6efdd', color: tier.number === 0 ? '#fdf9f0' : '#241c10', border: '1px solid #e6dabd' }}>
-            {tier.number === 0 ? '★' : tier.number}
-          </div>
-        </div>
-        <div className="w-[calc(50%-28px)] pl-4">
-          <h2 className="font-note text-2xl" style={{ color: '#241c10' }}>{tier.label}</h2>
+          {photo && <TrekPhoto photo={photo} name={trek.name} rotate={isLeft ? 3 : -3} fit={trek.photoFit || 'cover'} brightness={trek.photoBrightness} />}
         </div>
       </div>
     </motion.div>
@@ -273,15 +233,8 @@ function TierHeader({ tier, tierIndex }) {
 }
 
 export default function TreksPage() {
-  // Build a flat ordered sequence: tier header, then its treks alternating L/R
-  let globalIdx = 0
-  const sequence = []
-  treks.tiers.forEach((tier, ti) => {
-    sequence.push({ type: 'tier', tier, tierIndex: ti })
-    tier.treks.forEach((trek) => {
-      sequence.push({ type: 'trek', trek, globalIdx: globalIdx++, isLeft: globalIdx % 2 === 1 })
-    })
-  })
+  // Flat ordered sequence, alternating L/R down the spine
+  const sequence = treks.list.map((trek, i) => ({ trek, isLeft: (i + 1) % 2 === 1 }))
 
   return (
     <div className="min-h-screen" style={{ background: '#fdf9f0' }}>
@@ -390,20 +343,9 @@ export default function TreksPage() {
             style={{ background: 'linear-gradient(to bottom, transparent, #e6dabd 5%, #e6dabd 95%, transparent)' }} />
 
           <div className="flex flex-col gap-3 md:gap-12">
-            {sequence.map((item) => {
-              if (item.type === 'tier') {
-                return (
-                  <TierHeader key={`tier-${item.tier.number}`} tier={item.tier} tierIndex={item.tierIndex} />
-                )
-              }
-              return (
-                <TrekNode
-                  key={item.trek.name}
-                  trek={item.trek}
-                  isLeft={item.isLeft}
-                />
-              )
-            })}
+            {sequence.map((item) => (
+              <TrekNode key={item.trek.name} trek={item.trek} isLeft={item.isLeft} />
+            ))}
           </div>
 
           {/* End cap */}
