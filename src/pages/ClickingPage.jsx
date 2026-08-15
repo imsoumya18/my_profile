@@ -1,11 +1,9 @@
 import { motion } from 'framer-motion'
 import { Camera, ExternalLink } from 'lucide-react'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import clickingProfile from '../assets/images/clicking-profile.jpg'
 import Doodle from '../components/Doodle'
 import InstagramEmbed from '../components/InstagramEmbed'
-
-const { clicks } = profile
 
 // Corkboard-style scatter: each card gets its own tilt, nudge, tape angle
 // and vertical offset so the gallery reads as pinned-up snapshots rather
@@ -55,6 +53,7 @@ function ClickCard({ url, scatter }) {
 }
 
 export default function ClickingPage() {
+  const { clicks } = useProfile()
   return (
     <div className="min-h-screen" style={{ background: '#fdf9f0' }}>
       {/* Hero */}

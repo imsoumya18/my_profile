@@ -1,13 +1,11 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Mic2, Scissors, ArrowUpRight, Play } from 'lucide-react'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import InkCircle from './InkCircle'
 import SectionTag from './SectionTag'
 import TornEdge from './TornEdge'
 import useTilt from '../hooks/useTilt'
-
-const { projects } = profile
 
 const ICON_MAP = { Mic2, Scissors }
 
@@ -115,6 +113,7 @@ function TiltCard({ project, index }) {
 }
 
 export default function Projects() {
+  const { projects } = useProfile()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 

@@ -1,14 +1,8 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import SectionTag from './SectionTag'
 import Doodle from './Doodle'
-
-const { skills } = profile
-
-// Double the rows so the marquee loops seamlessly
-const row1 = [...skills.marquee.row1, ...skills.marquee.row1]
-const row2 = [...skills.marquee.row2, ...skills.marquee.row2]
 
 function MarqueeRow({ items, reverse = false }) {
   return (
@@ -24,6 +18,10 @@ function MarqueeRow({ items, reverse = false }) {
 }
 
 export default function Skills() {
+  const { skills } = useProfile()
+  // Double the rows so the marquee loops seamlessly
+  const row1 = [...skills.marquee.row1, ...skills.marquee.row1]
+  const row2 = [...skills.marquee.row2, ...skills.marquee.row2]
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 

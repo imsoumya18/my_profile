@@ -3,13 +3,11 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { motion, useInView } from 'framer-motion'
 import { Briefcase, GraduationCap, MapPin, GitBranch } from 'lucide-react'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import SectionTag from './SectionTag'
 import Doodle from './Doodle'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const { about } = profile
 
 const ICON_MAP = { Briefcase, GraduationCap, MapPin, GitBranch }
 
@@ -54,6 +52,7 @@ function WordReveal({ text }) {
 }
 
 export default function About() {
+  const { about } = useProfile()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
 

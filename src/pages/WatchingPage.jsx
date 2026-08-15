@@ -1,10 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Star, Play, Film, ChevronLeft, ChevronRight } from 'lucide-react'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import Doodle from '../components/Doodle'
-
-const { watching } = profile
 
 // YouTube serves a thumbnail for any public video at a predictable CDN URL
 // keyed only by video ID — no API key or manual upload needed, unlike a
@@ -81,7 +79,11 @@ function StarRow({ rating, size = 11 }) {
 
 function FrameCard({ title, index }) {
   const typeColor = TYPE_COLORS[title.type] || '#6b5d46'
-  const poster = (title.poster && posters[title.poster]) || youtubeThumbnail(title.url)
+  // "poster" is either a bundled asset key (pre-committed images) or, for
+  // anything added through the admin panel, a direct URL — either a pasted
+  // link or one served back from the image-upload Function. Both cases are
+  // just a URL by the time they get here.
+  const poster = (title.poster && (posters[title.poster] || title.poster)) || youtubeThumbnail(title.url)
 
   return (
     <motion.div
@@ -251,6 +253,7 @@ function FilmstripReel({ titles }) {
 }
 
 export default function WatchingPage() {
+  const { watching } = useProfile()
   const { title, type, progress, url } = watching.nowWatching
   const NowWatchingWrapper = url ? 'a' : 'div'
   const wrapperProps = url ? { href: url, target: '_blank', rel: 'noreferrer' } : {}

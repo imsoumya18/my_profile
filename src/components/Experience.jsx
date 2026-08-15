@@ -1,8 +1,6 @@
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import SectionTag from './SectionTag'
 import Doodle from './Doodle'
-
-const { experience } = profile
 
 function ExperienceRow({ exp, index }) {
   return (
@@ -56,6 +54,7 @@ function ExperienceRow({ exp, index }) {
 }
 
 export default function Experience() {
+  const { experience } = useProfile()
   return (
     <section id="experience" className="relative overflow-hidden" style={{ background: '#fdf9f0' }}>
       <div className="absolute cyber-grid pointer-events-none" aria-hidden="true" />

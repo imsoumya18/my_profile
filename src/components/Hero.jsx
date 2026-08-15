@@ -2,10 +2,8 @@ import { useRef, useState, useEffect, Suspense } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import HeroCanvas from './HeroCanvas'
 import Doodle from './Doodle'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import profilePortrait from '../assets/images/profile-portrait.jpg'
-
-const { personal, heroStats } = profile
 
 const lineVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -19,6 +17,7 @@ const lineVariants = {
 const statRot = [-2, 1.5, -1, 2]
 
 export default function Hero() {
+  const { personal, heroStats } = useProfile()
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
 

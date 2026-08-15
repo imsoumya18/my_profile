@@ -1,12 +1,10 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Github, Linkedin, Mail, Instagram, Facebook, ArrowUpRight } from 'lucide-react'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import TornEdge from './TornEdge'
 import LeetCodeIcon from './LeetCodeIcon'
 import useTilt from '../hooks/useTilt'
-
-const { contact, personal } = profile
 
 const ICON_MAP = { Github, Linkedin, Mail, LeetCodeIcon, Instagram, Facebook }
 
@@ -57,6 +55,7 @@ function ContactTile({ s, i, inView }) {
 }
 
 export default function Contact() {
+  const { contact, personal } = useProfile()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 

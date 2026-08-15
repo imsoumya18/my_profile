@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[dev]
+  command = "npm run dev"
+  targetPort = 5173
+  port = 8888
+  publish = "dist"
+  autoLaunch = false
+
+# Client-side routes (React Router) need every path to fall back to
+# index.html; this must come after the (implicit) /.netlify/functions/*
+# and /api/* handling so it doesn't swallow those.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

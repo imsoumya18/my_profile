@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Linkedin, FileText, ChevronDown, Mountain, Camera, BookOpen, Clapperboard, Menu, X, Home } from 'lucide-react'
-import profile from '../data/profile.json'
-
-const { nav, personal } = profile
+import { useProfile } from '../context/ProfileContext'
 
 export default function Navbar() {
+  const { nav, personal } = useProfile()
   const [scrolled, setScrolled] = useState(false)
   const [asideOpen, setAsideOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)

@@ -1,12 +1,10 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Mountain } from 'lucide-react'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import trekHero from '../assets/images/trek-hero.jpg'
 import InkCircle from '../components/InkCircle'
 import Doodle from '../components/Doodle'
-
-const { treks } = profile
 
 // Trek photos live in src/assets/images/treks/ and are referenced from
 // profile.json by filename (no extension) — drop a new file in that folder
@@ -15,16 +13,6 @@ const trekPhotoModules = import.meta.glob('../assets/images/treks/*.{jpg,jpeg,pn
 const trekPhotos = Object.fromEntries(
   Object.entries(trekPhotoModules).map(([path, url]) => [path.match(/([^/]+)\.\w+$/)[1], url])
 )
-
-const allTreks = treks.list
-
-const doneTreks    = allTreks.filter((t) => t.status === 'done')
-const doneCount    = doneTreks.length
-const nextTrek     = allTreks.find((t) => t.status === 'planned')
-
-const doneMaxAltTrek = doneTreks.length
-  ? doneTreks.reduce((a, b) => (b.altitude > a.altitude ? b : a))
-  : null
 
 function StatusBadge({ status, plannedDate, completedDate }) {
   if (status === 'done') {
@@ -181,7 +169,10 @@ function TrekNode({ trek, isLeft }) {
 
   const isDone    = trek.status === 'done'
   const isPlanned = trek.status === 'planned'
-  const photo     = trek.photo ? trekPhotos[trek.photo] : null
+  // "photo" is either a bundled asset key (pre-committed images) or, for
+  // anything added through the admin panel, a direct URL (pasted link or
+  // one served back from the image-upload Function).
+  const photo     = trek.photo ? (trekPhotos[trek.photo] || trek.photo) : null
 
   return (
     <motion.div
@@ -233,6 +224,16 @@ function TrekNode({ trek, isLeft }) {
 }
 
 export default function TreksPage() {
+  const { treks } = useProfile()
+
+  const allTreks = treks.list
+  const doneTreks = allTreks.filter((t) => t.status === 'done')
+  const doneCount = doneTreks.length
+  const nextTrek = allTreks.find((t) => t.status === 'planned')
+  const doneMaxAltTrek = doneTreks.length
+    ? doneTreks.reduce((a, b) => (b.altitude > a.altitude ? b : a))
+    : null
+
   // Flat ordered sequence, alternating L/R down the spine
   const sequence = treks.list.map((trek, i) => ({ trek, isLeft: (i + 1) % 2 === 1 }))
 

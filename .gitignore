@@ -28,3 +28,7 @@ Thumbs.db
 # Python cache (from bundled Claude skills)
 __pycache__/
 *.pyc
+
+# Local Netlify folder
+.netlify
+deno.lock

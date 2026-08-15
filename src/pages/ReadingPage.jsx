@@ -1,12 +1,10 @@
 import { useId } from 'react'
 import { motion } from 'framer-motion'
 import { Star, BookOpen } from 'lucide-react'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import Doodle from '../components/Doodle'
 import useTilt from '../hooks/useTilt'
 import { makeRng } from '../components/InkCircle'
-
-const { reading } = profile
 
 // A small warm palette to cycle the catalog tabs through — enough variety
 // to read as "sorted by hand," not a single repeated accent.
@@ -210,6 +208,7 @@ function BookCard({ book, index }) {
 }
 
 export default function ReadingPage() {
+  const { reading } = useProfile()
   const { title, author, type, progress } = reading.currentlyReading
 
   return (

@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ProfileProvider } from './context/ProfileContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -15,6 +16,11 @@ import TreksPage from './pages/TreksPage'
 import ClickingPage from './pages/ClickingPage'
 import ReadingPage from './pages/ReadingPage'
 import WatchingPage from './pages/WatchingPage'
+
+// Lazy-loaded: pulls in the full lucide-react icon set for the admin
+// panel's icon picker, which would otherwise bloat the bundle every public
+// visitor downloads. Only fetched when someone actually visits /admin.
+const AdminPage = lazy(() => import('./pages/AdminPage'))
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -56,16 +62,19 @@ function Portfolio() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Navbar />
-      <Routes>
-        <Route path="/"       element={<Portfolio />} />
-        <Route path="/treks"  element={<TreksPage />} />
-        <Route path="/clicking" element={<ClickingPage />} />
-        <Route path="/reading" element={<ReadingPage />} />
-        <Route path="/watching" element={<WatchingPage />} />
-      </Routes>
-    </BrowserRouter>
+    <ProfileProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Navbar />
+        <Routes>
+          <Route path="/"       element={<Portfolio />} />
+          <Route path="/treks"  element={<TreksPage />} />
+          <Route path="/clicking" element={<ClickingPage />} />
+          <Route path="/reading" element={<ReadingPage />} />
+          <Route path="/watching" element={<WatchingPage />} />
+          <Route path="/admin" element={<Suspense fallback={null}><AdminPage /></Suspense>} />
+        </Routes>
+      </BrowserRouter>
+    </ProfileProvider>
   )
 }

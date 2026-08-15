@@ -1,13 +1,11 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Code2, BarChart2, GitMerge, Cpu, Trophy, Star, Github } from 'lucide-react'
-import profile from '../data/profile.json'
+import { useProfile } from '../context/ProfileContext'
 import SectionTag from './SectionTag'
 import Doodle from './Doodle'
 import TornEdge from './TornEdge'
 import useTilt from '../hooks/useTilt'
-
-const { achievements } = profile
 
 const ICON_MAP = { Code2, BarChart2, GitMerge, Cpu, Trophy, Star, Github }
 
@@ -73,6 +71,7 @@ function AwardCard({ award, i, inView }) {
 }
 
 export default function Achievements() {
+  const { achievements } = useProfile()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
