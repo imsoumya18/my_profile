@@ -42,7 +42,6 @@ export const SECTIONS = [
     fields: [
       { key: 'name', label: 'Full name', type: 'text' },
       { key: 'nickname', label: 'Nickname', type: 'text' },
-      { key: 'initials', label: 'Initials', type: 'text' },
       { key: 'email', label: 'Email', type: 'text' },
       { key: 'phone', label: 'Phone', type: 'text' },
       { key: 'location', label: 'Location', type: 'text' },
@@ -56,26 +55,6 @@ export const SECTIONS = [
           { key: 'resume', label: 'Résumé', type: 'text' },
         ],
       },
-    ],
-  },
-  {
-    key: 'nav',
-    label: 'Navigation',
-    kind: 'array',
-    itemLabel: (item) => item.label || 'Nav item',
-    itemSchema: [
-      { key: 'href', label: 'Href (e.g. #about)', type: 'text' },
-      { key: 'label', label: 'Label', type: 'text' },
-    ],
-  },
-  {
-    key: 'heroStats',
-    label: 'Hero stats',
-    kind: 'array',
-    itemLabel: (item) => item.l || 'Stat',
-    itemSchema: [
-      { key: 'n', label: 'Number (e.g. 400+)', type: 'text' },
-      { key: 'l', label: 'Label', type: 'text' },
     ],
   },
   {
