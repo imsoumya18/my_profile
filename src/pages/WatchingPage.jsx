@@ -254,10 +254,10 @@ function FilmstripReel({ titles }) {
 
 export default function WatchingPage() {
   const { watching } = useProfile()
-  const { title, type, progress, url } = watching.nowWatching
+  const { title, type, progress, url, poster } = watching.nowWatching
   const NowWatchingWrapper = url ? 'a' : 'div'
   const wrapperProps = url ? { href: url, target: '_blank', rel: 'noreferrer' } : {}
-  const thumbnail = youtubeThumbnail(url)
+  const thumbnail = (poster && (posters[poster] || poster)) || youtubeThumbnail(url)
 
   return (
     <div className="min-h-screen" style={{ background: '#fdf9f0' }}>
@@ -285,34 +285,53 @@ export default function WatchingPage() {
             </p>
           </div>
 
-          {/* Now watching — a paused frame, projector still running */}
+          {/* Now watching — a paused frame, projector still running. When
+              nothing's set, the frame stays but shows an empty-reel state
+              instead of a blank title/type. */}
           <div className="w-full lg:w-auto flex justify-center lg:justify-end lg:flex-shrink-0">
             <div className="relative" style={{ width: 'min(280px, 70vw)', transform: 'rotate(-2deg)' }}>
-              <NowWatchingWrapper {...wrapperProps} style={{ display: 'block', background: '#241c10', border: '3px solid #241c10', boxShadow: '0 22px 45px rgba(36,28,16,0.25), 0 3px 6px rgba(36,28,16,0.15)' }}>
-                <div style={{ height: 6, backgroundImage: 'repeating-linear-gradient(to right, #fdf9f0 0 7px, transparent 7px 17px)', opacity: 0.7 }} />
-                <div className="relative flex items-center justify-center" style={{
-                  aspectRatio: '16 / 10', background: thumbnail ? `#3a2f1f url(${thumbnail}) center/cover` : '#3a2f1f',
-                }}>
-                  {thumbnail && <div className="absolute inset-0" style={{ background: 'rgba(36,28,16,0.25)' }} />}
-                  <div className="relative rounded-full flex items-center justify-center" style={{ width: 52, height: 52, background: 'rgba(253,249,240,0.15)' }}>
-                    <Play size={22} fill="#fdf9f0" style={{ color: '#fdf9f0' }} />
+              {title ? (
+                <NowWatchingWrapper {...wrapperProps} style={{ display: 'block', background: '#241c10', border: '3px solid #241c10', boxShadow: '0 22px 45px rgba(36,28,16,0.25), 0 3px 6px rgba(36,28,16,0.15)' }}>
+                  <div style={{ height: 6, backgroundImage: 'repeating-linear-gradient(to right, #fdf9f0 0 7px, transparent 7px 17px)', opacity: 0.7 }} />
+                  <div className="relative flex items-center justify-center" style={{
+                    aspectRatio: '16 / 10', background: thumbnail ? `#3a2f1f url(${thumbnail}) center/cover` : '#3a2f1f',
+                  }}>
+                    {thumbnail && <div className="absolute inset-0" style={{ background: 'rgba(36,28,16,0.25)' }} />}
+                    <div className="relative rounded-full flex items-center justify-center" style={{ width: 52, height: 52, background: 'rgba(253,249,240,0.15)' }}>
+                      <Play size={22} fill="#fdf9f0" style={{ color: '#fdf9f0' }} />
+                    </div>
                   </div>
-                </div>
-                <div style={{ height: 6, backgroundImage: 'repeating-linear-gradient(to right, #fdf9f0 0 7px, transparent 7px 17px)', opacity: 0.7 }} />
-                <div className="px-5 py-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-mono uppercase inline-block px-2 py-0.5 rounded-sm"
-                      style={{ fontSize: '9px', letterSpacing: '0.08em', color: '#241c10', background: '#d6870f' }}>
+                  <div style={{ height: 6, backgroundImage: 'repeating-linear-gradient(to right, #fdf9f0 0 7px, transparent 7px 17px)', opacity: 0.7 }} />
+                  <div className="px-5 py-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-mono uppercase inline-block px-2 py-0.5 rounded-sm"
+                        style={{ fontSize: '9px', letterSpacing: '0.08em', color: '#241c10', background: '#d6870f' }}>
+                        Now Watching
+                      </span>
+                      <span className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.08em', color: '#a3947a' }}>
+                        {type}
+                      </span>
+                    </div>
+                    <h3 className="font-note text-xl leading-snug mb-1" style={{ color: '#fdf9f0' }}>{title}</h3>
+                    {progress && <p className="font-mono text-xs" style={{ color: '#a3947a' }}>{progress}</p>}
+                  </div>
+                </NowWatchingWrapper>
+              ) : (
+                <div style={{ display: 'block', background: '#241c10', border: '3px solid #241c10', boxShadow: '0 22px 45px rgba(36,28,16,0.25), 0 3px 6px rgba(36,28,16,0.15)' }}>
+                  <div style={{ height: 6, backgroundImage: 'repeating-linear-gradient(to right, #fdf9f0 0 7px, transparent 7px 17px)', opacity: 0.7 }} />
+                  <div className="relative flex items-center justify-center" style={{ aspectRatio: '16 / 10', background: '#3a2f1f' }}>
+                    <Film size={26} strokeWidth={1.5} style={{ color: 'rgba(253,249,240,0.3)' }} />
+                  </div>
+                  <div style={{ height: 6, backgroundImage: 'repeating-linear-gradient(to right, #fdf9f0 0 7px, transparent 7px 17px)', opacity: 0.7 }} />
+                  <div className="px-5 py-4">
+                    <span className="font-mono uppercase inline-block px-2 py-0.5 rounded-sm mb-2"
+                      style={{ fontSize: '9px', letterSpacing: '0.08em', color: '#a3947a', background: 'rgba(253,249,240,0.08)' }}>
                       Now Watching
                     </span>
-                    <span className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.08em', color: '#a3947a' }}>
-                      {type}
-                    </span>
+                    <h3 className="font-note text-xl leading-snug" style={{ color: '#a3947a' }}>Nothing queued</h3>
                   </div>
-                  <h3 className="font-note text-xl leading-snug mb-1" style={{ color: '#fdf9f0' }}>{title}</h3>
-                  {progress && <p className="font-mono text-xs" style={{ color: '#a3947a' }}>{progress}</p>}
                 </div>
-              </NowWatchingWrapper>
+              )}
             </div>
           </div>
         </motion.div>

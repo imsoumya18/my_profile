@@ -239,7 +239,7 @@ export const SECTIONS = [
     kind: 'object',
     fields: [
       { key: 'tagline', label: 'Tagline', type: 'textarea' },
-      { key: 'nowWatching', label: 'Now watching', type: 'object', fields: watchingTitleSchema.filter((f) => f.key !== 'poster') },
+      { key: 'nowWatching', label: 'Now watching', type: 'object', fields: watchingTitleSchema },
       {
         key: 'titles', label: 'Titles', type: 'array',
         itemLabel: (item) => item.title || 'Title',

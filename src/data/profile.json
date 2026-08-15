@@ -621,20 +621,22 @@
   "watching": {
     "tagline": "Movies, shows, documentaries, and the occasional YouTube rabbit hole. Logged here in the order the reel actually ran.",
     "nowWatching": {
-      "title": "American Manhunt: Osama Bin Laden",
-      "type": "Documentary"
+      "title": "Antaheen",
+      "type": "Movie",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/7/7b/Antaheen.jpg"
     },
     "titles": [
+      { "title": "American Manhunt: Osama Bin Laden", "type": "Documentary", "watched": "Aug 2026", "poster": "https://resizing.flixster.com/ligaBznkN6JXPN3C6p0h_dI5XMM=/fit-in/705x460/v2/https://resizing.flixster.com/t2Y_NYOP0OeWbbiHf-eJCCb_ajg=/ems.cHJkLWVtcy1hc3NldHMvdHZzZXJpZXMvNDQ2ZGZmZGUtYTRkOS00YTg3LTk2ODgtOGNjOTRmYWU1ZGRiLmpwZw==" },
       { "title": "Amit Kilhor Exposes The Darkest Truths About How India Really Works", "type": "Podcast", "watched": "Aug 2026", "url": "https://youtu.be/fbWf6HjaNiA" },
-      { "title": "14 Peaks: Nothing Is Impossible", "type": "Documentary", "watched": "Jul 2026", "poster": "14-peaks" },
-      { "title": "Gram Chikitsalaya (S2)", "type": "Series", "watched": "Jul 2026", "poster": "gram-chikitsalaya" },
-      { "title": "Gram Chikitsalaya (S1)", "type": "Series", "watched": "Jul 2026", "poster": "gram-chikitsalaya" },
-      { "title": "Peddi", "type": "Movie", "watched": "Jun 2026", "poster": "peddi" },
-      { "title": "Main Vaapas Aaunga", "type": "Movie", "watched": "Jun 2026", "poster": "main-vaapas-aaunga" },
-      { "title": "Obsession", "type": "Movie", "watched": "Jun 2026", "poster": "obsession" },
-      { "title": "Balan: The Boy", "type": "Movie", "watched": "Jun 2026", "poster": "balan-the-boy" },
-      { "title": "Raja Shivaji", "type": "Movie", "watched": "May 2026", "poster": "raja-shivaji" },
-      { "title": "Bhooth Bangla", "type": "Movie", "watched": "Apr 2026", "poster": "bhooth-bangla" }
+      { "title": "14 Peaks: Nothing Is Impossible", "type": "Documentary", "watched": "Jul 2026", "poster": "https://resizing.flixster.com/hrYrjRa7t4gloxQ6aojke4rtXbQ=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p20885447_v_v13_ab.jpg" },
+      { "title": "Gram Chikitsalaya (S2)", "type": "Series", "watched": "Jul 2026", "poster": "https://resizing.flixster.com/yTM9fjIrenepQX6L4Y2mkTiqDfw=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p30136924_b_v10_aa.jpg" },
+      { "title": "Gram Chikitsalaya (S1)", "type": "Series", "watched": "Jul 2026", "poster": "https://resizing.flixster.com/yTM9fjIrenepQX6L4Y2mkTiqDfw=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p30136924_b_v10_aa.jpg" },
+      { "title": "Peddi", "type": "Movie", "watched": "Jun 2026", "poster": "https://resizing.flixster.com/WA43MrujAFa58VamEEbBDTjeayw=/fit-in/705x460/v2/https://resizing.flixster.com/XE3u3zs-aiTuEHy10LPCcV8-CGA=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2FkOWIwOWY5LTI3ZjItNGYzMC05MWFlLWJlYzc1ODU1Y2RhMi5qcGc=" },
+      { "title": "Main Vaapas Aaunga", "type": "Movie", "watched": "Jun 2026", "poster": "https://resizing.flixster.com/L29BKULQq2jiCbtOjk3D6Jt1Onk=/fit-in/705x460/v2/https://resizing.flixster.com/r0uK8PgSvuyIQGFqDhkBj-BEOro=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzZlMDNjYjU2LWI0NDAtNDg4Yy05MWVmLTBlOThmZWZiZDJjNC5qcGc=" },
+      { "title": "Obsession", "type": "Movie", "watched": "Jun 2026", "poster": "https://resizing.flixster.com/W2alMyPwmuDksanEXZLs95r2vMs=/fit-in/705x460/v2/https://resizing.flixster.com/wciPMzUm5zbBhWKN24eGdoRfK8I=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzBlZDNhZmI5LTM3N2EtNGIyZC1iZTA5LTU0NzUyY2M2ZGYyYi5qcGc=" },
+      { "title": "Balan: The Boy", "type": "Movie", "watched": "Jun 2026", "poster": "https://resizing.flixster.com/r1pjP2UenaCKHFpHT112eW2cUUY=/fit-in/705x460/v2/https://resizing.flixster.com/sDsq22-VLrmLYNyvD-k5Nhe-vY8=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzc0MjY1ZjhmLTNmZmEtNDZkMS1iZGM1LTdhM2U5ZDIyZTAzZC5qcGc=" },
+      { "title": "Raja Shivaji", "type": "Movie", "watched": "May 2026", "poster": "https://resizing.flixster.com/S1Ydg82TKkskaYHMXoWGHxWTkmc=/fit-in/705x460/v2/https://resizing.flixster.com/XlcRspw7k6mffLTWuEmsbhxWFSg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzJlYjdhOGIxLTNkNmQtNDk5MS05ZGMwLWM2ZTI3ODlhYzg1MC5qcGc=" },
+      { "title": "Bhooth Bangla", "type": "Movie", "watched": "Apr 2026", "poster": "https://resizing.flixster.com/zSUxlCERhErknsYMI0kAJ_4Yu2Q=/fit-in/705x460/v2/https://resizing.flixster.com/B4hCWBvhP2qnejHM8rdyH2q0gEg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzYzNzkxYjk2LWU0ZjMtNGJiYS05ZTYxLTA1MGJmY2YxNGNhNy5wbmc=" }
     ]
   },
   "contact": [
