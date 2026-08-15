@@ -66,16 +66,6 @@ export default function Navbar() {
           transition: 'all 0.4s ease',
         }}
       >
-        <button
-          onClick={goHome}
-          className="font-mono text-xs tracking-widest transition-colors duration-300"
-          style={{ color: '#241c10' }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = '#d6870f' }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = '#241c10' }}
-        >
-          {personal.initials}
-        </button>
-
         <nav className="hidden md:flex items-center gap-8">
           <button
             onClick={goHome}
