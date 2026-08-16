@@ -223,6 +223,25 @@ function TrekNode({ trek, isLeft }) {
   )
 }
 
+// A wishlist entry — no photo, no spine, no implied order. Just the card,
+// gently scattered like the rest of the site's grids.
+function WishlistCard({ trek, index }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const rot = [-1.5, 1, -1, 1.5][index % 4]
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: (index % 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <TrekCard trek={trek} isDone={false} isPlanned={trek.status === 'planned'} tilt={rot} />
+    </motion.div>
+  )
+}
+
 export default function TreksPage() {
   const { treks } = useProfile()
 
@@ -234,8 +253,12 @@ export default function TreksPage() {
     ? doneTreks.reduce((a, b) => (b.altitude > a.altitude ? b : a))
     : null
 
-  // Flat ordered sequence, alternating L/R down the spine
-  const sequence = treks.list.map((trek, i) => ({ trek, isLeft: (i + 1) % 2 === 1 }))
+  // Only treks that actually happened get a connected timeline — it implies
+  // a real, ordered sequence. Everything else is aspirational with no
+  // committed order, so it gets its own "wishlist" grid instead of looking
+  // like it's queued up next.
+  const wishlistTreks = allTreks.filter((t) => t.status !== 'done')
+  const doneSequence = doneTreks.map((trek, i) => ({ trek, isLeft: (i + 1) % 2 === 1 }))
 
   return (
     <div className="min-h-screen" style={{ background: '#fdf9f0' }}>
@@ -335,28 +358,30 @@ export default function TreksPage() {
           <Doodle type="footprints" size={64} rotate={-7} opacity={0.32} />
         </div>
 
-        <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-16 pb-24 relative">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-16 relative">
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical spine line — desktop only, mobile uses per-item rails */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2"
-            style={{ background: 'linear-gradient(to bottom, transparent, #e6dabd 5%, #e6dabd 95%, transparent)' }} />
+        {/* Timeline — only treks that actually happened, in the order they did */}
+        {doneSequence.length > 0 && (
+          <div className="relative">
+            {/* Vertical spine line — desktop only, mobile uses per-item rails */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2"
+              style={{ background: 'linear-gradient(to bottom, transparent, #e6dabd 5%, #e6dabd 95%, transparent)' }} />
 
-          <div className="flex flex-col gap-3 md:gap-12">
-            {sequence.map((item) => (
-              <TrekNode key={item.trek.name} trek={item.trek} isLeft={item.isLeft} />
-            ))}
-          </div>
+            <div className="flex flex-col gap-3 md:gap-12">
+              {doneSequence.map((item) => (
+                <TrekNode key={item.trek.name} trek={item.trek} isLeft={item.isLeft} />
+              ))}
+            </div>
 
-          {/* End cap */}
-          <div className="flex justify-center mt-6">
-            <div className="w-6 h-6 rounded-full border-2 border-dashed flex items-center justify-center"
-              style={{ borderColor: '#ddd0ae' }}>
-              <Mountain size={10} style={{ color: '#ddd0ae' }} strokeWidth={1.5} />
+            {/* End cap */}
+            <div className="flex justify-center mt-6">
+              <div className="w-6 h-6 rounded-full border-2 border-dashed flex items-center justify-center"
+                style={{ borderColor: '#ddd0ae' }}>
+                <Mountain size={10} style={{ color: '#ddd0ae' }} strokeWidth={1.5} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="text-center mt-16">
           <span className="note" style={{ color: '#a85e12', fontSize: '22px', transform: 'rotate(-1deg)', display: 'inline-block' }}>
@@ -364,6 +389,26 @@ export default function TreksPage() {
           </span>
         </div>
         </div>
+
+        {/* Wishlist — everything else. No spine, no order implied; just
+            the ones that keep pulling at the map. */}
+        {wishlistTreks.length > 0 && (
+          <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-20 pb-24 relative">
+            <div className="text-center mb-12">
+              <div className="label mb-3">The Wishlist</div>
+              <h2 className="font-note text-3xl mb-3" style={{ color: '#241c10' }}>Nothing booked, everything wanted</h2>
+              <p className="font-grotesk text-sm max-w-md mx-auto" style={{ color: '#6b5d46' }}>
+                No dates, no order — just the treks that keep pulling at the map.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {wishlistTreks.map((trek, i) => (
+                <WishlistCard key={trek.name} trek={trek} index={i} />
+              ))}
+            </div>
+          </div>
+        )}
       </section>
     </div>
   )

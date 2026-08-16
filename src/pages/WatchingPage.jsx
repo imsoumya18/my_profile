@@ -272,9 +272,9 @@ export default function WatchingPage() {
           <div className="w-full lg:max-w-[52%]">
             <div className="label mb-4">Beyond Code</div>
             <h1 className="hand mb-4" style={{ fontSize: 'clamp(58px, 10vw, 108px)', color: '#d6870f', lineHeight: 0.85 }}>
-              Now<br />
+              Currently<br />
               <span className="scribble-underline">
-                Showing
+                Watching
                 <svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true">
                   <path d="M2 12 Q 50 20 100 10 T 198 9" fill="none" stroke="#241c10" strokeWidth="4" strokeLinecap="round" />
                 </svg>

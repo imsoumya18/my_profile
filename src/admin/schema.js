@@ -10,11 +10,9 @@
 const trekItemSchema = [
   { key: 'name', label: 'Name', type: 'text' },
   { key: 'status', label: 'Status', type: 'select', options: ['done', 'future', 'planned'] },
-  { key: 'difficulty', label: 'Difficulty label', type: 'text' },
   { key: 'difficultyScore', label: 'Difficulty score (1-10)', type: 'number' },
   { key: 'altitude', label: 'Altitude (m)', type: 'number' },
   { key: 'altitudeFt', label: 'Altitude (ft)', type: 'number' },
-  { key: 'season', label: 'Season', type: 'text' },
   { key: 'location', label: 'Location', type: 'text' },
   { key: 'description', label: 'Description', type: 'textarea' },
   { key: 'completedDate', label: 'Completed date', type: 'text' },

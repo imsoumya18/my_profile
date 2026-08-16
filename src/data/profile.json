@@ -2,7 +2,6 @@
   "personal": {
     "name": "Soumyadeep Biswas",
     "nickname": "Soumya",
-    "initials": "SB",
     "email": "soumyadeep184@gmail.com",
     "phone": "+91 84208 22053",
     "location": "Hyderabad, India",
@@ -372,10 +371,8 @@
       {
         "name": "Netravati",
         "status": "done",
-        "difficulty": "Easy",
         "difficultyScore": 1,
         "altitude": 1520,
-        "season": null,
         "location": "Karnataka, India",
         "description": "A friendly weekend trek from Bangalore — grasslands, shola forest, and a solid excuse to leave the city for two days.",
         "completedDate": "Sep 2024",
@@ -387,10 +384,8 @@
       {
         "name": "Tungnath Chandrashila Peak",
         "status": "done",
-        "difficulty": "Easy–Moderate",
         "difficultyScore": 3,
         "altitude": 3690,
-        "season": null,
         "location": "Uttarakhand, India",
         "description": "First Himalayan trek, done with a crew of friends — more laughs than altitude gain, but the rhythm stuck.",
         "completedDate": "Dec 2025",
@@ -400,10 +395,8 @@
       {
         "name": "Valley of Flowers and Hemkund Sahib",
         "status": "done",
-        "difficulty": "Moderate",
         "difficultyScore": 5,
         "altitude": 4633,
-        "season": null,
         "location": "Uttarakhand, India",
         "description": "A step up in scenery and duration — non-technical but a solid stamina and logistics test.",
         "completedDate": "Aug 2026",
@@ -413,10 +406,8 @@
       {
         "name": "Kedarkantha",
         "status": "future",
-        "difficulty": "Moderate",
         "difficultyScore": 4,
         "altitude": 3810,
-        "season": "Dec–Apr",
         "location": "Uttarakhand, India",
         "description": "Great next step after Tungnath — well-marked snow trek, cold-weather camping.",
         "altitudeFt": 12500
@@ -424,10 +415,8 @@
       {
         "name": "Triund",
         "status": "future",
-        "difficulty": "Easy",
         "difficultyScore": 2,
         "altitude": 3010,
-        "season": "Year-round",
         "location": "Himachal Pradesh, India",
         "description": "Short, popular overnight near Dharamshala — a good low-stakes warm-up.",
         "altitudeFt": 9900
@@ -435,10 +424,8 @@
       {
         "name": "Brahmatal",
         "status": "future",
-        "difficulty": "Moderate",
         "difficultyScore": 4,
         "altitude": 3734,
-        "season": "Dec–Mar",
         "location": "Uttarakhand, India",
         "description": "Frozen lake, snow camping, Trishul / Nanda Ghunti views — a Kedarkantha alternate.",
         "altitudeFt": 12300
@@ -446,10 +433,8 @@
       {
         "name": "Har Ki Dun",
         "status": "future",
-        "difficulty": "Moderate",
         "difficultyScore": 4,
         "altitude": 3566,
-        "season": "Mar–Dec",
         "location": "Uttarakhand, India",
         "description": "River-valley walking and views of Swargarohini — longer than Valley of Flowers.",
         "altitudeFt": 11700
@@ -457,10 +442,8 @@
       {
         "name": "Hampta Pass",
         "status": "future",
-        "difficulty": "Moderate",
         "difficultyScore": 5,
         "altitude": 4270,
-        "season": "Jun–Sep",
         "location": "Himachal Pradesh, India",
         "description": "Crossover from lush Kullu valley to arid Lahaul in one pass — scenic.",
         "altitudeFt": 14000
@@ -468,10 +451,8 @@
       {
         "name": "Annapurna Base Camp",
         "status": "future",
-        "difficulty": "Moderate",
         "difficultyScore": 4,
         "altitude": 4130,
-        "season": "Mar–Nov",
         "location": "Nepal",
         "description": "First taste of Nepal tea-house logistics — gentler than the big three.",
         "altitudeFt": 13500
@@ -479,10 +460,8 @@
       {
         "name": "Roopkund",
         "status": "future",
-        "difficulty": "Moderate–Difficult",
         "difficultyScore": 6,
         "altitude": 5029,
-        "season": "May–Jun, Sep",
         "location": "Uttarakhand, India",
         "description": "Pushes past 4,800 m — a genuine altitude test.",
         "altitudeFt": 16500
@@ -490,10 +469,8 @@
       {
         "name": "Kashmir Great Lakes",
         "status": "future",
-        "difficulty": "Moderate–Difficult",
         "difficultyScore": 6,
         "altitude": 4191,
-        "season": "Jul–Aug",
         "location": "Jammu & Kashmir, India",
         "description": "Multiple high passes; alpine-lake scenery few treks match.",
         "altitudeFt": 13800
@@ -501,10 +478,8 @@
       {
         "name": "Chadar Trek",
         "status": "future",
-        "difficulty": "Moderate–Difficult",
         "difficultyScore": 6,
         "altitude": 3390,
-        "season": "Jan–Feb",
         "location": "Ladakh, India",
         "description": "Walking a frozen river — a cold-weather resilience detour.",
         "altitudeFt": 11100
@@ -512,10 +487,8 @@
       {
         "name": "Annapurna Circuit",
         "status": "future",
-        "difficulty": "Moderate–Difficult",
         "difficultyScore": 6,
         "altitude": 5416,
-        "season": "Oct–Nov, Mar–Apr",
         "location": "Nepal",
         "description": "Crosses Thorong La at 5,400 m — key acclimatization rehearsal.",
         "altitudeFt": 17800
@@ -523,10 +496,8 @@
       {
         "name": "Goecha La",
         "status": "future",
-        "difficulty": "Difficult",
         "difficultyScore": 7,
         "altitude": 4940,
-        "season": "Apr–May, Sep–Oct",
         "location": "Sikkim, India",
         "description": "Close-up Kanchenjunga view without the full base camp commitment.",
         "altitudeFt": 16200
@@ -534,10 +505,8 @@
       {
         "name": "Rupin Pass",
         "status": "future",
-        "difficulty": "Difficult",
         "difficultyScore": 7,
         "altitude": 4650,
-        "season": "May–Jun, Dec",
         "location": "Uttarakhand, India",
         "description": "Dramatic, varied terrain with steep snow sections.",
         "altitudeFt": 15300
@@ -545,10 +514,8 @@
       {
         "name": "Pin Parvati Pass",
         "status": "future",
-        "difficulty": "Difficult",
         "difficultyScore": 8,
         "altitude": 5319,
-        "season": "Jul–Sep",
         "location": "Himachal Pradesh, India",
         "description": "Remote, expedition-style — the last rehearsal before base camps.",
         "altitudeFt": 17500
@@ -556,10 +523,8 @@
       {
         "name": "Everest Base Camp",
         "status": "future",
-        "difficulty": "Difficult",
         "difficultyScore": 7,
         "altitude": 5364,
-        "season": "Mar–May, Sep–Nov",
         "location": "Nepal",
         "description": "The classic — tackle once ABC and a 5,000 m+ pass are done.",
         "altitudeFt": 17600
@@ -567,10 +532,8 @@
       {
         "name": "Kanchenjunga BC",
         "status": "future",
-        "difficulty": "Difficult",
         "difficultyScore": 8,
         "altitude": 5143,
-        "season": "Apr–May, Oct–Nov",
         "location": "Sikkim/Nepal",
         "description": "Remote and far less crowded than EBC — ideally after Goecha La.",
         "altitudeFt": 16900
@@ -578,10 +541,8 @@
       {
         "name": "K2 Base Camp",
         "status": "future",
-        "difficulty": "Expedition",
         "difficultyScore": 9,
         "altitude": 5050,
-        "season": "Jun–Aug",
         "location": "Pakistan",
         "description": "Longest and most remote — tougher logistics via Skardu. The ultimate objective.",
         "altitudeFt": 16600
@@ -593,6 +554,7 @@
     "instagram": "https://www.instagram.com/b_soumya4",
     "instagramHandle": "@b_soumya4",
     "posts": [
+      { "url": "https://www.instagram.com/p/DbiVCjOlDFf" },
       { "url": "https://www.instagram.com/p/DZkdJk0FOc4" },
       { "url": "https://www.instagram.com/p/DZQOuk-vkuy" },
       { "url": "https://www.instagram.com/p/DTAxJeNDxoQ" },
