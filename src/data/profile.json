@@ -566,28 +566,29 @@
     "_comment": "PLACEHOLDER data — swap in the real list whenever ready",
     "tagline": "Fiction for the commute, nonfiction for the itch to understand how things actually work. Logged here mostly so I remember what I thought at the time.",
     "currentlyReading": {
-      "title": "Deep Work",
-      "author": "Cal Newport",
+      "title": "Sapiens",
+      "author": "Yuval Noah Harari",
       "type": "Nonfiction",
-      "progress": "62%"
+      "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1703329310i/23692271.jpg"
     },
     "books": [
-      { "title": "Project Hail Mary", "author": "Andy Weir", "type": "Novel", "finished": "Mar 2026", "rating": 5, "note": "Read the last third in one sitting. Rare for me." },
-      { "title": "Sapiens", "author": "Yuval Noah Harari", "type": "Nonfiction", "finished": "Jan 2026", "rating": 4, "note": "The myths-as-infrastructure framing stuck with me." },
-      { "title": "The Pragmatic Programmer", "author": "Hunt & Thomas", "type": "Nonfiction", "finished": "Nov 2025", "rating": 4, "note": "Reread for the third time, still finds new things to fix." },
-      { "title": "Atomic Habits", "author": "James Clear", "type": "Nonfiction", "finished": "Sep 2025", "rating": 3, "note": "Good scaffolding, thin on the actual hard parts." },
-      { "title": "Dune", "author": "Frank Herbert", "type": "Novel", "finished": "Jul 2025", "rating": 5, "note": "Should've read this a decade ago." },
-      { "title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "type": "Nonfiction", "finished": "Apr 2025", "rating": 4, "note": "Dense. Worth the slow pace." }
+      { "title": "Project Hail Mary", "author": "Andy Weir", "type": "Novel", "finished": "Mar 2026" },
+      { "title": "The Pragmatic Programmer", "author": "Hunt & Thomas", "type": "Nonfiction", "finished": "Nov 2025" },
+      { "title": "Atomic Habits", "author": "James Clear", "type": "Nonfiction", "finished": "Sep 2025" },
+      { "title": "Dune", "author": "Frank Herbert", "type": "Novel", "finished": "Jul 2025" },
+      { "title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "type": "Nonfiction", "finished": "Apr 2025" }
     ]
   },
   "watching": {
     "tagline": "Movies, shows, documentaries, and the occasional YouTube rabbit hole. Logged here in the order the reel actually ran.",
     "nowWatching": {
-      "title": "Antaheen",
-      "type": "Movie",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/7/7b/Antaheen.jpg"
+      "title": "",
+      "type": "",
+      "poster": ""
     },
     "titles": [
+      { "title": "Antaheen", "type": "Movie", "watched": "Aug 2026", "poster": "https://upload.wikimedia.org/wikipedia/en/7/7b/Antaheen.jpg" },
+      { "title": "Keu Bole Biplobi, Keu Bole Dakat", "type": "Movie", "watched": "Aug 2026", "poster": "https://image.tmdb.org/t/p/original/vT3VllVhSFw2D7t2M91WmM7Dsqc.jpg" },
       { "title": "American Manhunt: Osama Bin Laden", "type": "Documentary", "watched": "Aug 2026", "poster": "https://resizing.flixster.com/ligaBznkN6JXPN3C6p0h_dI5XMM=/fit-in/705x460/v2/https://resizing.flixster.com/t2Y_NYOP0OeWbbiHf-eJCCb_ajg=/ems.cHJkLWVtcy1hc3NldHMvdHZzZXJpZXMvNDQ2ZGZmZGUtYTRkOS00YTg3LTk2ODgtOGNjOTRmYWU1ZGRiLmpwZw==" },
       { "title": "Amit Kilhor Exposes The Darkest Truths About How India Really Works", "type": "Podcast", "watched": "Aug 2026", "url": "https://youtu.be/fbWf6HjaNiA" },
       { "title": "14 Peaks: Nothing Is Impossible", "type": "Documentary", "watched": "Jul 2026", "poster": "https://resizing.flixster.com/hrYrjRa7t4gloxQ6aojke4rtXbQ=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p20885447_v_v13_ab.jpg" },

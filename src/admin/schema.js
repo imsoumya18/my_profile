@@ -215,6 +215,7 @@ export const SECTIONS = [
           { key: 'author', label: 'Author', type: 'text' },
           { key: 'type', label: 'Type', type: 'text' },
           { key: 'progress', label: 'Progress (e.g. 62%)', type: 'text' },
+          { key: 'cover', label: 'Cover image', type: 'image' },
         ],
       },
       {
@@ -225,8 +226,7 @@ export const SECTIONS = [
           { key: 'author', label: 'Author', type: 'text' },
           { key: 'type', label: 'Type', type: 'select', options: ['Novel', 'Nonfiction'] },
           { key: 'finished', label: 'Finished (e.g. Mar 2026)', type: 'text' },
-          { key: 'rating', label: 'Rating (1-5)', type: 'number' },
-          { key: 'note', label: 'Note', type: 'textarea' },
+          { key: 'cover', label: 'Cover image', type: 'image' },
         ],
       },
     ],

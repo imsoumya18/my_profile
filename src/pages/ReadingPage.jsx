@@ -1,6 +1,6 @@
 import { useId } from 'react'
 import { motion } from 'framer-motion'
-import { Star, BookOpen } from 'lucide-react'
+import { BookOpen } from 'lucide-react'
 import { useProfile } from '../context/ProfileContext'
 import Doodle from '../components/Doodle'
 import useTilt from '../hooks/useTilt'
@@ -86,22 +86,6 @@ function StampBadge({ date, size = 108, rotate = -8, style }) {
   )
 }
 
-function StarRow({ rating, size = 12 }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          size={size}
-          strokeWidth={1.5}
-          style={{ color: i < rating ? '#a85e12' : '#ddd0ae' }}
-          fill={i < rating ? '#a85e12' : 'none'}
-        />
-      ))}
-    </div>
-  )
-}
-
 function BookCard({ book, index }) {
   const { ref, tilt, glow, onMouseMove, onMouseLeave } = useTilt()
   const { rot, mt, peekRot, peekX, peekY } = SCATTER[index % SCATTER.length]
@@ -157,15 +141,19 @@ function BookCard({ book, index }) {
         <div className="absolute left-0 right-0" style={{ top: 44, height: 1, background: 'rgba(214,52,42,0.25)' }} />
 
         <div className="relative pt-4 flex gap-4">
-          {/* Cover swatch — stand-in for real cover art */}
+          {/* Real cover art when a book has one, else the gradient swatch stand-in */}
           <div className="flex-shrink-0 rounded-sm overflow-hidden relative" style={{
             width: 56, aspectRatio: '2 / 3', background: cover,
             boxShadow: 'inset -4px 0 8px rgba(0,0,0,0.18), 0 2px 4px rgba(36,28,16,0.15)',
           }}>
-            <div className="absolute inset-0 flex items-center justify-center font-hand"
-              style={{ fontSize: '26px', color: 'rgba(255,253,247,0.88)' }}>
-              {book.title[0]}
-            </div>
+            {book.cover ? (
+              <img src={book.cover} alt={book.title} className="absolute inset-0 w-full h-full" style={{ objectFit: 'cover' }} />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center font-hand"
+                style={{ fontSize: '26px', color: 'rgba(255,253,247,0.88)' }}>
+                {book.title[0]}
+              </div>
+            )}
           </div>
 
           <div className="min-w-0 flex-1">
@@ -178,13 +166,6 @@ function BookCard({ book, index }) {
               {book.author}
             </p>
           </div>
-        </div>
-
-        <div className="relative mt-4">
-          <StarRow rating={book.rating} />
-          <p className="font-grotesk text-xs leading-relaxed mt-2" style={{ color: '#6b5d46', maxWidth: '78%' }}>
-            {book.note}
-          </p>
         </div>
 
         {/* Stamped on top of the card, like a real due-date stamp pressed
@@ -209,7 +190,7 @@ function BookCard({ book, index }) {
 
 export default function ReadingPage() {
   const { reading } = useProfile()
-  const { title, author, type, progress } = reading.currentlyReading
+  const { title, author, type, progress, cover } = reading.currentlyReading
 
   return (
     <div className="min-h-screen" style={{ background: '#fdf9f0' }}>
@@ -276,10 +257,14 @@ export default function ReadingPage() {
                       width: 62, aspectRatio: '2 / 3', background: COVER_GRADIENTS[0],
                       boxShadow: 'inset -4px 0 8px rgba(0,0,0,0.18), 0 2px 4px rgba(36,28,16,0.15)',
                     }}>
-                      <div className="absolute inset-0 flex items-center justify-center font-hand"
-                        style={{ fontSize: '28px', color: 'rgba(255,253,247,0.88)' }}>
-                        {title[0]}
-                      </div>
+                      {cover ? (
+                        <img src={cover} alt={title} className="absolute inset-0 w-full h-full" style={{ objectFit: 'cover' }} />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center font-hand"
+                          style={{ fontSize: '28px', color: 'rgba(255,253,247,0.88)' }}>
+                          {title[0]}
+                        </div>
+                      )}
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="font-mono uppercase mb-2" style={{ fontSize: '8px', letterSpacing: '0.12em', color: '#a85e12' }}>Title</div>
@@ -291,9 +276,6 @@ export default function ReadingPage() {
                         {author}
                       </p>
                     </div>
-                  </div>
-                  <div className="h-1.5 rounded-full overflow-hidden mt-5" style={{ background: '#e6dabd' }}>
-                    <div className="h-full rounded-full" style={{ width: progress, background: '#d6870f' }} />
                   </div>
                 </div>
               </div>
