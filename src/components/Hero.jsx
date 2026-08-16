@@ -60,6 +60,67 @@ export default function Hero() {
         <Doodle type="footprints" size={66} rotate={6} opacity={0.33} />
       </div>
 
+      {/* A wink toward the "Beyond Code" nav dropdown — reverse psychology.
+          Desktop: text beside a rightward arrow pointing at the pill, which
+          sits mid-header with plenty of room. Mobile: Beyond Code sits at a
+          fixed distance from the right edge (120px, verified across widths)
+          with only ~60-120px of clear horizontal room to its left before
+          hitting the hamburger — not enough for the desktop layout — so
+          this stacks below the button instead, pointing straight up. */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0, rotate: [0, -3, 3, -3, 0] }}
+        transition={{ opacity: { delay: 1.3, duration: 0.8 }, y: { delay: 1.3, duration: 0.8 }, rotate: { delay: 2.4, duration: 0.7, repeat: Infinity, repeatDelay: 3.5, ease: 'easeInOut' } }}
+        className="lg:hidden absolute pointer-events-none"
+        style={{ top: 54, right: 150, zIndex: 2 }}
+      >
+        <svg width="46" height="42" viewBox="0 0 46 42" fill="none" aria-hidden="true">
+          {/* Echo stroke — drawn twice, like the pen got excited */}
+          <g opacity="0.4" transform="rotate(-7 20 20) translate(-2, 2)">
+            <path d="M14 38 C 10 20, 18 14, 32 4" stroke="#d6342a" strokeWidth="2.5" strokeLinecap="round" />
+            <path d="M27 13 L32 4 L22 6" stroke="#d6342a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </g>
+          <path d="M14 38 C 10 20, 18 14, 32 4" stroke="#d6342a" strokeWidth="2.75" strokeLinecap="round" />
+          <path d="M27 13 L32 4 L22 6" stroke="#d6342a" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+        <span className="note" style={{ color: '#d6342a', fontSize: '17px', fontWeight: 700, transform: 'rotate(-2deg)', display: 'block', whiteSpace: 'nowrap', marginTop: 2 }}>
+          don't check this out!!
+        </span>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0, rotate: [0, -2.5, 2.5, -2.5, 0] }}
+        transition={{ opacity: { delay: 1.3, duration: 0.8 }, y: { delay: 1.3, duration: 0.8 }, rotate: { delay: 2.4, duration: 0.7, repeat: Infinity, repeatDelay: 3.5, ease: 'easeInOut' } }}
+        className="hidden lg:block absolute pointer-events-none"
+        style={{ top: 7, right: 365, zIndex: 2 }}
+      >
+        <svg width="132" height="110" viewBox="0 0 132 110" fill="none" aria-hidden="true">
+          {/* Echo stroke — drawn twice, like the pen got excited */}
+          <g opacity="0.4" transform="rotate(6 65 55) translate(4, -4)">
+            <path d="M10 100 C 20 20, 81 3.5, 120 26" stroke="#d6342a" strokeWidth="4" strokeLinecap="round" />
+            <path d="M102.1 24.4 L120 26 L109.7 11.3" stroke="#d6342a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </g>
+          <path d="M10 100 C 20 20, 81 3.5, 120 26" stroke="#d6342a" strokeWidth="4.5" strokeLinecap="round" />
+          <path d="M102.1 24.4 L120 26 L109.7 11.3" stroke="#d6342a" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      </motion.div>
+
+      {/* Label — sits near arrow 1's tail, out in the open space between
+          the headline column and the photo, instead of being cramped in
+          the thin strip right under the nav. */}
+      <motion.div
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0, rotate: [0, -2, 2, -2, 0] }}
+        transition={{ opacity: { delay: 1.3, duration: 0.8 }, y: { delay: 1.3, duration: 0.8 }, rotate: { delay: 2.2, duration: 0.7, repeat: Infinity, repeatDelay: 3.5, ease: 'easeInOut' } }}
+        className="hidden lg:block absolute pointer-events-none"
+        style={{ top: 118, right: 400, zIndex: 2 }}
+      >
+        <span className="note" style={{ color: '#d6342a', fontSize: '26px', fontWeight: 700, transform: 'rotate(-3deg)', display: 'inline-block', whiteSpace: 'nowrap' }}>
+          don't check this out!!!
+        </span>
+      </motion.div>
+
       {/* Neural net canvas */}
       <motion.div style={{ opacity: canvasOpacity, zIndex: 1 }} className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <Suspense fallback={null}><HeroCanvas active={canvasActive} /></Suspense>
@@ -158,13 +219,13 @@ export default function Hero() {
         </div>
 
         {/* Hanging photo — pinned to the page like a scrap on the wall */}
-        <div className="w-full lg:w-auto flex justify-center lg:justify-end lg:flex-shrink-0 lg:translate-x-6 xl:translate-x-10">
-          <div className="relative" style={{ width: 'min(390px, 78vw)', transform: 'rotate(3deg)' }}>
+        <div className="w-full mt-16 lg:mt-0 lg:w-auto flex justify-center lg:justify-end lg:flex-shrink-0 lg:translate-x-6 xl:translate-x-10">
+          <div className="relative w-[58vw] max-w-[230px] lg:w-[min(390px,78vw)] lg:max-w-none" style={{ transform: 'rotate(3deg)' }}>
             <div style={{
               position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%) rotate(2deg)',
               width: 88, height: 26, background: 'rgba(214,135,15,0.3)', border: '1px solid rgba(168,94,18,0.22)', zIndex: 2,
             }} />
-            <div style={{ background: '#fffdf7', padding: '12px 12px 46px', boxShadow: '0 22px 45px rgba(36,28,16,0.22), 0 3px 6px rgba(36,28,16,0.12)' }}>
+            <div style={{ background: '#fffdf7', padding: '12px 12px 20px', boxShadow: '0 22px 45px rgba(36,28,16,0.22), 0 3px 6px rgba(36,28,16,0.12)' }}>
               <div style={{
                 aspectRatio: '4 / 5',
                 backgroundImage: `url(${profilePortrait})`,

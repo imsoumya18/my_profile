@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Linkedin, FileText, ChevronDown, Mountain, Camera, BookOpen, Clapperboard, Menu, X, Home } from 'lucide-react'
@@ -9,6 +9,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [asideOpen, setAsideOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const asideRef = useRef(null)
   const { scrollYProgress } = useScroll()
   const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
   const navigate = useNavigate()
@@ -25,6 +26,17 @@ export default function Navbar() {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
+
+  // Click-only dropdown (not hover) so it behaves the same on touch and
+  // mouse — close it on an outside click/tap instead of onMouseLeave.
+  useEffect(() => {
+    if (!asideOpen) return
+    const onPointerDown = (e) => {
+      if (asideRef.current && !asideRef.current.contains(e.target)) setAsideOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => document.removeEventListener('pointerdown', onPointerDown)
+  }, [asideOpen])
 
   const goHome = () => {
     setMobileOpen(false)
@@ -91,14 +103,24 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
-          <div
-            className="relative"
-            onMouseEnter={() => setAsideOpen(true)}
-            onMouseLeave={() => setAsideOpen(false)}
-          >
+        {/* Mobile trigger — takes the left slot the desktop nav uses,
+            keeping Beyond Code/LinkedIn/Résumé right-aligned on their own */}
+        <button
+          className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full"
+          style={{ color: '#241c10' }}
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+        >
+          {mobileOpen ? <X size={20} strokeWidth={1.8} /> : <Menu size={20} strokeWidth={1.8} />}
+        </button>
+
+        {/* Beyond Code + LinkedIn + Résumé — always visible, right-aligned
+            at every width instead of hiding behind the hamburger on mobile. */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="relative" ref={asideRef}>
             <button
-              className="inline-flex items-center gap-1 font-grotesk text-xs px-3.5 py-1.5 rounded-full border transition-all duration-200"
+              onClick={() => setAsideOpen((v) => !v)}
+              className="inline-flex items-center gap-1 font-grotesk text-xs px-2.5 sm:px-3.5 py-1.5 rounded-full border transition-all duration-200"
               style={{ color: '#3a2f1f', borderColor: '#e6dabd', background: '#f6efdd' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d6870f'; e.currentTarget.style.color = '#a85e12'; e.currentTarget.style.background = '#f3ddac' }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e6dabd'; e.currentTarget.style.color = '#3a2f1f'; e.currentTarget.style.background = '#f6efdd' }}
@@ -119,6 +141,7 @@ export default function Navbar() {
                 >
                   <Link
                     to="/treks"
+                    onClick={() => setAsideOpen(false)}
                     className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs transition-colors duration-200"
                     style={{ color: '#241c10' }}
                     onMouseEnter={(e) => { e.currentTarget.style.background = '#f6efdd' }}
@@ -129,6 +152,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     to="/clicking"
+                    onClick={() => setAsideOpen(false)}
                     className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs transition-colors duration-200"
                     style={{ color: '#241c10' }}
                     onMouseEnter={(e) => { e.currentTarget.style.background = '#f6efdd' }}
@@ -139,6 +163,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     to="/reading"
+                    onClick={() => setAsideOpen(false)}
                     className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs transition-colors duration-200"
                     style={{ color: '#241c10' }}
                     onMouseEnter={(e) => { e.currentTarget.style.background = '#f6efdd' }}
@@ -149,6 +174,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     to="/watching"
+                    onClick={() => setAsideOpen(false)}
                     className="flex items-center gap-3 px-4 py-2.5 font-grotesk text-xs transition-colors duration-200"
                     style={{ color: '#241c10' }}
                     onMouseEnter={(e) => { e.currentTarget.style.background = '#f6efdd' }}
@@ -171,26 +197,17 @@ export default function Navbar() {
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 font-grotesk text-xs px-3.5 py-1.5 rounded-full border transition-all duration-200"
+              aria-label={label}
+              className="inline-flex items-center gap-1.5 font-grotesk text-xs rounded-full border transition-all duration-200 w-9 h-9 sm:w-auto sm:h-auto justify-center sm:px-3.5 sm:py-1.5"
               style={{ color: '#fdf9f0', borderColor: '#241c10', background: '#241c10' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#3a2f1f'; e.currentTarget.style.borderColor = '#3a2f1f' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = '#241c10'; e.currentTarget.style.borderColor = '#241c10' }}
             >
               <Icon size={12} strokeWidth={1.8} />
-              {label}
+              <span className="hidden sm:inline">{label}</span>
             </a>
           ))}
         </div>
-
-        {/* Mobile trigger */}
-        <button
-          className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full"
-          style={{ color: '#241c10' }}
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-        >
-          {mobileOpen ? <X size={20} strokeWidth={1.8} /> : <Menu size={20} strokeWidth={1.8} />}
-        </button>
       </motion.header>
 
       {/* Mobile menu panel */}
@@ -229,65 +246,6 @@ export default function Navbar() {
                 </button>
               ))}
             </nav>
-
-            <div className="label mb-3">Beyond Code</div>
-            <div className="flex flex-col gap-1 mb-6">
-              <Link
-                to="/treks"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 py-3 font-grotesk text-sm"
-                style={{ color: '#241c10', borderBottom: '1px solid #ede3c8' }}
-              >
-                <Mountain size={15} strokeWidth={1.5} />
-                Trekking
-              </Link>
-              <Link
-                to="/clicking"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 py-3 font-grotesk text-sm"
-                style={{ color: '#241c10', borderBottom: '1px solid #ede3c8' }}
-              >
-                <Camera size={15} strokeWidth={1.5} />
-                Clicking
-              </Link>
-              <Link
-                to="/reading"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 py-3 font-grotesk text-sm"
-                style={{ color: '#241c10', borderBottom: '1px solid #ede3c8' }}
-              >
-                <BookOpen size={15} strokeWidth={1.5} />
-                Reading
-              </Link>
-              <Link
-                to="/watching"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 py-3 font-grotesk text-sm"
-                style={{ color: '#241c10' }}
-              >
-                <Clapperboard size={15} strokeWidth={1.5} />
-                Watching
-              </Link>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              {[
-                { href: personal.links.linkedin, Icon: Linkedin, label: 'LinkedIn' },
-                { href: personal.links.resume,   Icon: FileText,  label: 'Résumé'  },
-              ].map(({ href, Icon, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 font-grotesk text-sm px-4 py-3 rounded-full"
-                  style={{ color: '#fdf9f0', background: '#241c10' }}
-                >
-                  <Icon size={14} strokeWidth={1.8} />
-                  {label}
-                </a>
-              ))}
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
