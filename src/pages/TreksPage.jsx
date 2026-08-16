@@ -264,6 +264,9 @@ export default function TreksPage() {
     <div className="min-h-screen" style={{ background: '#fdf9f0' }}>
       {/* Hero */}
       <section className="relative pt-28 pb-12 lg:pt-36 lg:pb-16" style={{ background: '#fdf9f0' }}>
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div className="cyber-grid" />
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -348,6 +351,7 @@ export default function TreksPage() {
       </section>
 
       <section className="relative overflow-hidden">
+        <div className="cyber-grid" />
         <div className="hidden lg:block absolute pointer-events-none" style={{ left: '4%', top: '10%' }}>
           <Doodle type="mountain" size={84} rotate={-5} opacity={0.34} />
         </div>

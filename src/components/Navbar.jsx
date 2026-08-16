@@ -10,6 +10,11 @@ export default function Navbar() {
   const [asideOpen, setAsideOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const asideRef = useRef(null)
+  const hoverCloseTimer = useRef(null)
+  // Only mice/trackpads get hover-to-open — touchscreens report a "hover"
+  // capable pointer too inconsistently, and that's what caused the old
+  // open-then-immediately-close bug on tap. Click still works everywhere.
+  const [canHover] = useState(() => window.matchMedia('(hover: hover) and (pointer: fine)').matches)
   const { scrollYProgress } = useScroll()
   const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
   const navigate = useNavigate()
@@ -27,8 +32,11 @@ export default function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
-  // Click-only dropdown (not hover) so it behaves the same on touch and
-  // mouse — close it on an outside click/tap instead of onMouseLeave.
+  useEffect(() => () => clearTimeout(hoverCloseTimer.current), [])
+
+  // Closes on an outside click/tap — needed on touch devices (no hover
+  // there) and as a backup on desktop for clicks that land outside both
+  // the button and the panel.
   useEffect(() => {
     if (!asideOpen) return
     const onPointerDown = (e) => {
@@ -37,6 +45,19 @@ export default function Navbar() {
     document.addEventListener('pointerdown', onPointerDown)
     return () => document.removeEventListener('pointerdown', onPointerDown)
   }, [asideOpen])
+
+  const openOnHover = () => {
+    if (!canHover) return
+    clearTimeout(hoverCloseTimer.current)
+    setAsideOpen(true)
+  }
+
+  const closeOnHoverLeave = () => {
+    if (!canHover) return
+    // Small delay so crossing the gap between the button and the panel
+    // below it doesn't register as a "leave" and slam it shut.
+    hoverCloseTimer.current = setTimeout(() => setAsideOpen(false), 150)
+  }
 
   const goHome = () => {
     setMobileOpen(false)
@@ -117,7 +138,7 @@ export default function Navbar() {
         {/* Beyond Code + LinkedIn + Résumé — always visible, right-aligned
             at every width instead of hiding behind the hamburger on mobile. */}
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="relative" ref={asideRef}>
+          <div className="relative" ref={asideRef} onMouseEnter={openOnHover} onMouseLeave={closeOnHoverLeave}>
             <button
               onClick={() => setAsideOpen((v) => !v)}
               className="inline-flex items-center gap-1 font-grotesk text-xs px-2.5 sm:px-3.5 py-1.5 rounded-full border transition-all duration-200"

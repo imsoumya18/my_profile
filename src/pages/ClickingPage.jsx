@@ -58,6 +58,9 @@ export default function ClickingPage() {
     <div className="min-h-screen" style={{ background: '#fdf9f0' }}>
       {/* Hero */}
       <section className="relative pt-28 pb-12 lg:pt-36 lg:pb-16" style={{ background: '#fdf9f0' }}>
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div className="cyber-grid" />
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

@@ -24,7 +24,7 @@ const trekItemSchema = [
 
 const watchingTitleSchema = [
   { key: 'title', label: 'Title', type: 'text' },
-  { key: 'type', label: 'Type', type: 'select', options: ['Movie', 'Series', 'Documentary', 'YouTube', 'Podcast'] },
+  { key: 'type', label: 'Type', type: 'select', options: ['Movie', 'Series', 'Documentary', 'Podcast'] },
   { key: 'watched', label: 'Watched (e.g. Jun 2026)', type: 'text' },
   { key: 'url', label: 'URL', type: 'text' },
   { key: 'poster', label: 'Poster', type: 'image' },

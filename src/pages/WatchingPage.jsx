@@ -26,7 +26,6 @@ const TYPE_COLORS = {
   Movie: '#d6870f',
   Series: '#a85e12',
   Documentary: '#6b5d46',
-  YouTube: '#d6342a',
   Podcast: '#8a7a5e',
 }
 
@@ -39,13 +38,12 @@ const FALLBACK_GRADIENTS = [
 
 // Reels render in this order; any type not listed here (data drifts faster
 // than code) still gets its own reel, just tacked on at the end.
-const CATEGORY_ORDER = ['Movie', 'Series', 'Documentary', 'Podcast', 'YouTube']
+const CATEGORY_ORDER = ['Movie', 'Series', 'Documentary', 'Podcast']
 const CATEGORY_LABELS = {
   Movie: 'Movies',
   Series: 'Series',
   Documentary: 'Documentaries',
   Podcast: 'Podcasts',
-  YouTube: 'YouTube',
 }
 
 function groupByType(titles) {
@@ -263,6 +261,9 @@ export default function WatchingPage() {
     <div className="min-h-screen" style={{ background: '#fdf9f0' }}>
       {/* Hero */}
       <section className="relative pt-28 pb-12 lg:pt-36 lg:pb-16" style={{ background: '#fdf9f0' }}>
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div className="cyber-grid" />
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
