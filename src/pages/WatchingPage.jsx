@@ -102,11 +102,19 @@ function FrameCard({ title, index }) {
         </div>
       )}
       <div className="p-4">
-        <div className="mb-2.5">
+        <div className="flex items-center gap-1.5 mb-2.5">
           <span className="font-mono uppercase px-1.5 py-0.5"
             style={{ fontSize: '8px', letterSpacing: '0.08em', color: '#fdf9f0', background: typeColor }}>
             {title.type}
           </span>
+          {title.language && (
+            <span className="font-mono uppercase px-1.5 py-0.5" style={{
+              fontSize: '8px', letterSpacing: '0.08em', color: typeColor,
+              background: 'transparent', border: `1px solid ${typeColor}`,
+            }}>
+              {title.language}
+            </span>
+          )}
         </div>
 
         <h3 className="font-note text-base leading-snug mb-1" style={{ color: '#241c10' }}>
